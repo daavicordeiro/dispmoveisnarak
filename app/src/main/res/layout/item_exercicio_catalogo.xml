@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Exercício do catálogo do gestor: foto, nome e máquina/equipamento (RF37.2) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/UniforFit.Cartao"
+    android:layout_marginTop="8dp">
+
+    <View
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_thumb" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/texto_escuro"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/laranja" />
+
+            <TextView
+                android:id="@+id/tvMaquina"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/azul"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvGrupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/texto_cinza"
+        android:textSize="11sp" />
+</LinearLayout>

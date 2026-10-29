@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Moldura das telas principais do aluno: conteúdo + botão do assistente (RF09.5) + navbar (RF09.6).
+     O layout da tela é inflado dentro de @id/conteudo pela BaseActivity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/uf_branco"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/conteudo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <include
+            android:id="@+id/fabAssistente"
+            layout="@layout/uf_view_fab_assistente"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/uf_borda" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/uf_branco"
+        app:itemActiveIndicatorStyle="@null"
+        app:itemIconSize="22dp"
+        app:itemIconTint="@color/uf_bottom_nav_cor"
+        app:itemTextColor="@color/uf_bottom_nav_cor"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/uf_menu_bottom_nav" />
+</LinearLayout>

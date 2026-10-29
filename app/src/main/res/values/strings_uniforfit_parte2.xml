@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Comuns -->
+    <string name="uf_voltar">Voltar</string>
+    <string name="uf_assistente">Assistente</string>
+    <string name="uf_em_breve">Em breve</string>
+
+    <!-- Notificações -->
+    <string name="uf_notificacoes_titulo">Notificações</string>
+    <string name="uf_notificacoes_vazio">Você não tem notificações.</string>
+
+    <!-- Perfil -->
+    <string name="uf_foto_perfil">Foto de perfil</string>
+    <string name="uf_ra_formato">R.A. %1$s</string>
+    <string name="uf_ranking_formato">#%1$d</string>
+    <string name="uf_rotulo_ranking">Ranking</string>
+    <string name="uf_rotulo_treinos">Treinos</string>
+    <string name="uf_rotulo_pontos">Pontos</string>
+    <string name="uf_editar_anamnese">Editar dados da anamnese</string>
+    <string name="uf_fale_professor_menu">Fale com seu Professor</string>
+    <string name="uf_acessibilidade">Acessibilidade</string>
+    <string name="uf_sair_conta">Sair da conta</string>
+    <string name="uf_sair_confirmar_titulo">Sair da conta?</string>
+    <string name="uf_sair_confirmar_msg">Você precisará entrar novamente para acessar seus treinos.</string>
+    <string name="uf_sair">Sair</string>
+    <string name="uf_cancelar">Cancelar</string>
+
+    <!-- Bottom navigation -->
+    <string name="uf_nav_inicio">Início</string>
+    <string name="uf_nav_treinos">Treinos</string>
+    <string name="uf_nav_evolucao">Evolução</string>
+    <string name="uf_nav_ranking">Ranking</string>
+    <string name="uf_nav_perfil">Perfil</string>
+
+    <!-- Fale com o professor -->
+    <string name="uf_fale_professor_titulo">Fale com seu professor</string>
+    <string name="uf_fale_professor_subtitulo">Tire dúvidas sobre seu treino ou avaliação</string>
+    <string name="uf_sua_mensagem">Sua mensagem</string>
+    <string name="uf_mensagem_hint">Escreva sua dúvida aqui…</string>
+    <string name="uf_enviar_mensagem">Enviar mensagem</string>
+    <string name="uf_ou_whatsapp">ou fale direto pelo WhatsApp da academia</string>
+    <string name="uf_abrir_whatsapp">Abrir WhatsApp</string>
+    <string name="uf_mensagem_vazia">Escreva sua mensagem antes de enviar.</string>
+    <string name="uf_mensagem_enviada">Mensagem enviada ao professor!</string>
+    <string name="uf_mensagem_erro">Não foi possível enviar. Tente novamente.</string>
+    <string name="uf_whatsapp_indisponivel">Não foi possível abrir o WhatsApp.</string>
+</resources>

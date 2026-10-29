@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Perfil do Gestor (RF40) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/uf_fundo_suave"
+    android:fillViewport="true"
+    tools:context=".gestor.PerfilGestorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:text="← Painel"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/uf_bg_avatar"
+            android:contentDescription="@string/uf_foto_perfil" />
+
+        <TextView
+            android:id="@+id/tvNomeGestor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:accessibilityHeading="true"
+            android:text="Prof. Carlos Andrade"
+            android:textColor="@color/uf_texto"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvEmailGestor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Educador físico · Unifor Fit"
+            android:textColor="@color/uf_texto_secundario"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/itemMeusDados"
+            style="@style/UfItemMenuPerfil"
+            android:layout_marginTop="24dp"
+            android:text="Meus dados" />
+
+        <TextView
+            android:id="@+id/itemAlunosAtribuidos"
+            style="@style/UfItemMenuPerfil"
+            android:text="Alunos atribuídos a mim" />
+
+        <TextView
+            android:id="@+id/itemNotificacoesPainel"
+            style="@style/UfItemMenuPerfil"
+            android:text="Notificações do painel" />
+
+        <TextView
+            android:id="@+id/itemNomenclatura"
+            style="@style/UfItemMenuPerfil"
+            android:text="Nomenclatura padrão da academia" />
+
+        <TextView
+            android:id="@+id/itemAcessibilidade"
+            style="@style/UfItemMenuPerfil"
+            android:text="@string/uf_acessibilidade" />
+
+        <TextView
+            android:id="@+id/itemSair"
+            style="@style/UfItemMenuPerfil"
+            android:text="@string/uf_sair_conta"
+            android:textColor="@color/vermelho" />
+    </LinearLayout>
+</ScrollView>

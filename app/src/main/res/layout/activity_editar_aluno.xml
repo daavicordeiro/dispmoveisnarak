@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Editar Aluno (RF30) — também usada para cadastrar um novo aluno (RF29.5) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:fillViewport="true"
+    tools:context=".gestor.EditarAlunoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:text="← Voltar"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            style="@style/UniforFit.Titulo"
+            android:layout_marginBottom="20dp"
+            android:accessibilityHeading="true"
+            android:text="Editar Aluno"
+            android:textSize="24sp" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etNome"
+            android:text="Nome completo" />
+
+        <EditText
+            android:id="@+id/etNome"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: Giuseppe Chinelate"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName|textCapWords" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etRa"
+            android:text="R.A." />
+
+        <EditText
+            android:id="@+id/etRa"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: 2201234567"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="10" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etEmail"
+            android:text="E-mail" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            style="@style/UniforFit.Campo"
+            android:hint="aluno@edu.unifor.br"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
+
+        <!-- RF30.2 — listas suspensas -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:text="Status" />
+
+                <Spinner
+                    android:id="@+id/spStatus"
+                    style="@style/UniforFit.ListaSuspensa"
+                    android:contentDescription="Status" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:text="Turma/Modalidade" />
+
+                <Spinner
+                    android:id="@+id/spTurma"
+                    style="@style/UniforFit.ListaSuspensa"
+                    android:contentDescription="Turma ou modalidade" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:text="Treino atribuído" />
+
+        <Spinner
+            android:id="@+id/spTreino"
+            style="@style/UniforFit.ListaSuspensa"
+            android:contentDescription="Treino atribuído" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <!-- RF30.5 — cor de alerta -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExcluir"
+                style="@style/UniforFit.BotaoPerigo"
+                android:layout_width="0dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="Excluir aluno" />
+
+            <!-- RF30.4 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSalvar"
+                style="@style/UniforFit.BotaoPrimario"
+                android:layout_width="0dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:text="Salvar"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

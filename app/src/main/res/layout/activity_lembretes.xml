@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lembretes (RF39) — regras de notificação automática -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".gestor.LembretesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:layout_marginTop="8dp"
+            android:text="← Painel"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:accessibilityHeading="true"
+                android:text="Lembretes"
+                android:textColor="@color/texto_escuro"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- RF39.4 -->
+            <TextView
+                android:id="@+id/btnNovoLembrete"
+                android:layout_width="44dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_botao_primario"
+                android:clickable="true"
+                android:contentDescription="Criar nova regra de lembrete"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Avisos enviados automaticamente aos alunos."
+            android:textColor="@color/texto_cinza"
+            android:textSize="12sp" />
+
+        <!-- RF39.1, preenchida pela Activity -->
+        <LinearLayout
+            android:id="@+id/listaLembretes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

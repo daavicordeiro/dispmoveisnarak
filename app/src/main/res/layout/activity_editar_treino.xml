@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Editar Treino (RF36) — também usada para cadastrar um novo treino (RF35.3) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:fillViewport="true"
+    tools:context=".gestor.EditarTreinoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:text="← Treinos"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            style="@style/UniforFit.Titulo"
+            android:layout_marginBottom="20dp"
+            android:accessibilityHeading="true"
+            android:text="Editar Treino"
+            android:textSize="24sp" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etNomeTreino"
+            android:text="Nome do treino" />
+
+        <EditText
+            android:id="@+id/etNomeTreino"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: Treino C — Pernas"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences" />
+
+        <!-- RF36.1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:text="Categoria" />
+
+                <Spinner
+                    android:id="@+id/spCategoria"
+                    style="@style/UniforFit.ListaSuspensa"
+                    android:contentDescription="Categoria" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:text="Nível" />
+
+                <Spinner
+                    android:id="@+id/spNivel"
+                    style="@style/UniforFit.ListaSuspensa"
+                    android:contentDescription="Nível" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- RF36.2 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="Exercícios no treino"
+            android:textColor="@color/texto_escuro"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/listaExerciciosTreino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/tvSemExercicios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nenhum exercício ainda. Adicione do catálogo."
+            android:textColor="@color/texto_cinza"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- RF36.4 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAdicionarExercicio"
+            style="@style/UniforFit.BotaoSecundario"
+            android:layout_marginTop="12dp"
+            android:text="+ Adicionar exercício" />
+
+        <!-- RF36.5 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSalvarTreino"
+            style="@style/UniforFit.BotaoPrimario"
+            android:layout_marginTop="10dp"
+            android:text="Salvar treino"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>

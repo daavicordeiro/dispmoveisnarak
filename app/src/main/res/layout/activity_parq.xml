@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="ETAPA 2 DE 3"
+            android:textColor="@color/azul"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Teste de PAR-Q"
+            android:textColor="@color/texto_escuro"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Questionário de prontidão para atividade física."
+            android:textColor="@color/texto_cinza"
+            android:textSize="13sp" />
+
+        <!-- Indicador de progresso (3 posições, a 2ª ativa) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/azul" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+        </LinearLayout>
+
+        <!-- Pergunta 1 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="1. Algum médico já disse que você possui um problema de coração?"
+            android:textColor="@color/texto_escuro"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgPergunta1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbSim1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:paddingStart="8dp"
+                android:text="Sim"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/rbNao1"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:checked="true"
+                android:paddingStart="8dp"
+                android:text="Não"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <!-- Pergunta 2 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="2. Você sente dores no peito quando pratica atividade física?"
+            android:textColor="@color/texto_escuro"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgPergunta2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbSim2"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:paddingStart="8dp"
+                android:text="Sim"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/rbNao2"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:checked="true"
+                android:paddingStart="8dp"
+                android:text="Não"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <!-- Pergunta 3 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="3. Você perde o equilíbrio devido a tontura ou já perdeu a consciência?"
+            android:textColor="@color/texto_escuro"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgPergunta3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbSim3"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:paddingStart="8dp"
+                android:text="Sim"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/rbNao3"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_opcao_selector"
+                android:buttonTint="@color/azul"
+                android:checked="true"
+                android:paddingStart="8dp"
+                android:text="Não"
+                android:textColor="@color/texto_escuro"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnContinuar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:text="Continuar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/azul"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+</ScrollView>

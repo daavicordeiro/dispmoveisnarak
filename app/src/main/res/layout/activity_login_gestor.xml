@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0E1A"
+    android:fillViewport="true"
+    tools:context=".gestor.LoginGestorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="28dp"
+        android:paddingTop="140dp"
+        android:paddingEnd="28dp"
+        android:paddingBottom="24dp">
+
+        <!-- Exporte o logo do Figma (node 150:1465) para res/drawable/ic_logo -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:contentDescription="Logo Unifor Fit"
+            android:scaleType="centerCrop"
+            android:src="@drawable/unifor_marca" />
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/manrope_extralight"
+            android:text="Painel do Gestor"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvSubtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Acesso restrito à equipe da academia"
+            android:textColor="#6B7280"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvErroGestor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:accessibilityLiveRegion="polite"
+            android:text="E-mail ou senha incorretos."
+            android:textColor="#FF6B6B"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="E-mail institucional"
+            android:textColor="#6B7280"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_input"
+            android:hint="professor@unifor.br"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp"
+            android:textColor="#0A0E1A"
+            android:textColorHint="#6B7280"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Senha"
+            android:textColor="#6B7280"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_input"
+            android:hint="••••••••"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp"
+            android:textColor="#0A0E1A"
+            android:textColorHint="#6B7280"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btnEntrar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_botao_azul"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="Entrar"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvSouAluno"
+            style="@style/UniforFit.Link"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Sou aluno · Entrar com R.A."
+            android:textColor="#8FA2FF"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>

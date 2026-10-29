@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Minha Semana (RF10). Vai dentro do uf_shell_aluno (assistente + navbar). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".ui.treino.MinhaSemanaActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="40dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="96dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="Minha semana"
+            android:textColor="@color/texto_escuro"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Seletor dos 7 dias (RF10.1), preenchido pela Activity -->
+        <LinearLayout
+            android:id="@+id/seletorDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal" />
+
+        <!-- Legenda dos marcadores (as bolinhas são coloridas pela Activity) -->
+        <TextView
+            android:id="@+id/tvLegenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="● concluído   ● planejado   ● descanso"
+            android:textColor="@color/texto_cinza"
+            android:textSize="11sp" />
+
+        <!-- Cards dos treinos (RF10.2), preenchidos pela Activity -->
+        <LinearLayout
+            android:id="@+id/listaSemana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

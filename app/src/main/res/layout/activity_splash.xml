@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azul"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- Círculo branco do protótipo (placeholder da logo).
+         Se tiver a logo em PNG, troque este View por um ImageView -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="98dp"
+        app:srcCompat="@drawable/unifor_marca" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Unifor Fit"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:alpha="0.85"
+        android:text="Seu treino, sua evolução."
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+</LinearLayout>

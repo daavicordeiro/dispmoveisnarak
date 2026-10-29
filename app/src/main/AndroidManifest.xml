@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Detectar falta de internet e mostrar a tela "Sem conexão" (RF23) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.UniforFit"
+        tools:targetApi="31">
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <!-- ===== Acesso ===== -->
+        <activity
+            android:name=".ui.auth.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.UniforFit.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.auth.LoginActivity" android:exported="false" />
+        <activity android:name=".ui.auth.PrimeiroAcessoActivity" android:exported="false" />
+        <activity android:name=".ui.auth.RecuperarSenhaActivity" android:exported="false" />
+
+        <!-- ===== Onboarding clínico ===== -->
+        <activity android:name=".ui.onboarding.AnamneseActivity" android:exported="false" />
+        <activity android:name=".ui.onboarding.ParqActivity" android:exported="false" />
+        <activity android:name=".ui.onboarding.MedidasActivity" android:exported="false" />
+        <activity android:name=".ui.onboarding.ApresentacaoActivity" android:exported="false" />
+
+        <!-- ===== App do aluno ===== -->
+        <activity android:name=".ui.home.HomeActivity" android:exported="false" />
+        <activity android:name=".ui.treino.MinhaSemanaActivity" android:exported="false" />
+        <activity android:name=".ui.treino.DetalheTreinoActivity" android:exported="false" />
+        <activity android:name=".ui.treino.DetalheExercicioActivity" android:exported="false" />
+        <activity android:name=".ui.treino.PersonalizarCargaActivity" android:exported="false" />
+        <activity android:name=".ui.treino.ExecucaoSerieActivity" android:exported="false" />
+        <activity android:name=".ui.evolucao.EvolucaoCargaActivity" android:exported="false" />
+        <activity android:name=".ui.evolucao.EvolucaoCorporalActivity" android:exported="false" />
+        <activity android:name=".ui.evolucao.CalculadoraImcActivity" android:exported="false" />
+        <activity android:name=".ui.ranking.RankingActivity" android:exported="false" />
+        <activity android:name=".ui.notificacoes.NotificacoesActivity" android:exported="false" />
+        <activity android:name=".ui.perfil.PerfilActivity" android:exported="false" />
+        <activity android:name=".ui.perfil.AcessibilidadeActivity" android:exported="false" />
+        <activity android:name=".ui.professor.FaleProfessorActivity" android:exported="false" />
+        <activity android:name=".ui.chatbot.ChatbotActivity" android:exported="false" />
+        <activity android:name=".ui.comum.SemConexaoActivity" android:exported="false" />
+
+        <!-- ===== Painel do Gestor ===== -->
+        <activity android:name=".gestor.LoginGestorActivity" android:exported="false" />
+        <activity android:name=".gestor.HomeGestorActivity" android:exported="false" />
+        <activity android:name=".gestor.AlunosActivity" android:exported="false" />
+        <activity android:name=".gestor.FichaAlunoActivity" android:exported="false" />
+        <activity android:name=".gestor.EditarAlunoActivity" android:exported="false" />
+        <activity android:name=".gestor.TreinosListaActivity" android:exported="false" />
+        <activity android:name=".gestor.EditarTreinoActivity" android:exported="false" />
+        <activity android:name=".gestor.ExerciciosActivity" android:exported="false" />
+        <activity android:name=".gestor.EditarExercicioActivity" android:exported="false" />
+        <activity android:name=".gestor.LembretesActivity" android:exported="false" />
+        <activity android:name=".gestor.PerfilGestorActivity" android:exported="false" />
+    </application>
+
+</manifest>

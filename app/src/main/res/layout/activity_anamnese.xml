@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Anamnese — Etapa 1 de 3 (RF05). Também reaberta pelo Perfil em modo edição (RF21.2). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:fillViewport="true"
+    tools:context=".ui.onboarding.AnamneseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Só aparece no modo edição, vindo do Perfil -->
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:layout_marginTop="8dp"
+            android:text="← Perfil"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/UniforFit.Etapa"
+            android:text="ETAPA 1 DE 3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:accessibilityHeading="true"
+            android:text="Anamnese"
+            android:textColor="@color/texto_escuro"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Nos conte um pouco sobre sua saúde antes de começar."
+            android:textColor="@color/texto_cinza"
+            android:textSize="13sp" />
+
+        <!-- Indicador de progresso (3 posições, a 1ª ativa) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Etapa 1 de 3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/azul" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etPeso"
+            android:text="Peso atual (kg)" />
+
+        <EditText
+            android:id="@+id/etPeso"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: 72"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="5" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etAltura"
+            android:text="Altura (cm)" />
+
+        <EditText
+            android:id="@+id/etAltura"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: 175"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="3" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etLesao"
+            android:text="Possui alguma lesão ou restrição médica?" />
+
+        <EditText
+            android:id="@+id/etLesao"
+            style="@style/UniforFit.Campo"
+            android:hint="Descreva aqui, se houver"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etObjetivo"
+            android:text="Objetivo principal" />
+
+        <EditText
+            android:id="@+id/etObjetivo"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: Hipertrofia, emagrecimento..."
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinuar"
+            style="@style/UniforFit.BotaoPrimario"
+            android:layout_marginTop="8dp"
+            android:text="Continuar"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>

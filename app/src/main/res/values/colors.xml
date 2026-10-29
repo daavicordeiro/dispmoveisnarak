@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- UniforFit -->
+    <color name="azul_primario">#0050FF</color>
+    <color name="azul_claro_card">#EAF1FF</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="texto_titulo">#0F172A</color>
+    <color name="texto_secundario">#6B7280</color>
+    <color name="texto_label">#374151</color>
+    <color name="borda_campo">#E5E7EB</color>
+    <color name="placeholder">#9CA3AF</color>
+    <color name="verde_sucesso">#16A34A</color>
+    <color name="verde">#16A34A</color>
+    <color name="vermelho">#DC2626</color>
+
+    <!-- Telas novas (navegação / pop-ups) -->
+    <color name="fundo_escuro">#0A0E1A</color>
+    <color name="fundo_escuro_card">#161B2E</color>
+    <color name="cinza_marcador">#C5CAD6</color>
+    <color name="vermelho_claro">#FDECEC</color>
+    <color name="laranja_claro">#FEF3E2</color>
+    <color name="verde_claro">#E7F6EC</color>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navbar do aluno (RF09.6): Início, Treinos, Evolução, Ranking e Perfil -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@drawable/uf_ic_nav_placeholder"
+        android:title="@string/uf_nav_inicio" />
+    <item
+        android:id="@+id/nav_treinos"
+        android:icon="@drawable/uf_ic_nav_placeholder"
+        android:title="@string/uf_nav_treinos" />
+    <item
+        android:id="@+id/nav_evolucao"
+        android:icon="@drawable/uf_ic_nav_placeholder"
+        android:title="@string/uf_nav_evolucao" />
+    <item
+        android:id="@+id/nav_ranking"
+        android:icon="@drawable/uf_ic_nav_placeholder"
+        android:title="@string/uf_nav_ranking" />
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/uf_ic_nav_placeholder"
+        android:title="@string/uf_nav_perfil" />
+</menu>

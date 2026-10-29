@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Apresentação (RF08) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azul"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".ui.onboarding.ApresentacaoActivity">
+
+    <FrameLayout
+        android:id="@+id/circuloLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/bg_circulo">
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center"
+            android:contentDescription="Logo Unifor Fit"
+            android:src="@drawable/logo_unifor"
+            android:tint="@color/azul"
+            tools:ignore="UseAppTint" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvTituloApresentacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:accessibilityHeading="true"
+        android:text="Treinos personalizados para você"
+        android:textColor="@color/branco"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDescricaoApresentacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:alpha="0.9"
+        android:lineSpacingExtra="2dp"
+        android:text="Acompanhe sua evolução, ganhe pontos no ranking e nunca perca um treino."
+        android:textColor="@color/branco"
+        android:textSize="15sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="18dp"
+            android:layout_height="6dp"
+            android:background="@drawable/bg_pill" />
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="6dp"
+            android:alpha="0.5"
+            android:background="@drawable/bg_pill" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAvancar"
+        style="@style/UniforFit.BotaoPrimario"
+        android:background="@drawable/bg_botao_branco"
+        android:text="Avançar"
+        android:textColor="@color/azul"
+        android:textSize="15sp" />
+</LinearLayout>

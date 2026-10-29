@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ficha do Aluno (RF31) com as abas Anamnese, PAR-Q, Medidas e Evolução -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".gestor.FichaAlunoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- RF31.6 -->
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:layout_marginTop="8dp"
+            android:text="← Alunos"
+            android:textSize="12sp" />
+
+        <!-- Cabeçalho do aluno (RF31) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/person_png"
+                android:backgroundTint="@color/black"
+                android:importantForAccessibility="no" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNomeAluno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:accessibilityHeading="true"
+                    android:text="Giuseppe Chinelate"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvInfoAluno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R.A. 2201234567 · Ativo desde mar/2026"
+                    android:textColor="@color/texto_cinza"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- RF31.5 -->
+        <TextView
+            android:id="@+id/tvEditarDados"
+            style="@style/UniforFit.Link"
+            android:layout_marginTop="4dp"
+            android:text="Editar dados cadastrais →"
+            android:textSize="12sp" />
+
+        <!-- Abas (RF31.1) -->
+        <RadioGroup
+            android:id="@+id/rgAbas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_card"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <RadioButton
+                android:id="@+id/rbAnamnese"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segmento_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="Anamnese"
+                android:textColor="@color/cor_segmento"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbParq"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segmento_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="PAR-Q"
+                android:textColor="@color/cor_segmento"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbMedidas"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segmento_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Medidas"
+                android:textColor="@color/cor_segmento"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbEvolucao"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segmento_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="Evolução"
+                android:textColor="@color/cor_segmento"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+        <!-- ===================== Aba Anamnese (RF31.2 a RF31.4) ===================== -->
+        <LinearLayout
+            android:id="@+id/painelAnamnese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Anamnese"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peso atual"
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvPeso"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="72 kg"
+                            android:textColor="@color/texto_escuro"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Altura"
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvAltura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="175 cm"
+                            android:textColor="@color/texto_escuro"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvObjetivoLesao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Objetivo: Hipertrofia · Sem restrições médicas"
+                    android:textColor="@color/texto_cinza"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Resumo do PAR-Q -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Teste de PAR-Q"
+                        android:textColor="@color/texto_escuro"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/seloParqResumo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_pill"
+                        android:backgroundTint="@color/verde"
+                        android:paddingStart="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="2dp"
+                        android:text="SEM RISCOS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvResumoParq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Todas as respostas indicaram “Não” — liberado para atividade física sem restrições."
+                    android:textColor="@color/texto_cinza"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Resumo das medidas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medidas Corporais"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cintura"
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvCintura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="82 cm"
+                            android:textColor="@color/texto_escuro"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quadril"
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvQuadril"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="98 cm"
+                            android:textColor="@color/texto_escuro"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Evolução recente -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:backgroundTint="@color/azul_claro"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Evolução recente"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+100%"
+                            android:textColor="@color/azul"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Carga em 7 sem."
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-4,2kg"
+                            android:textColor="@color/azul"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peso corporal"
+                            android:textColor="@color/texto_cinza"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Abre a aba Evolução -->
+                <TextView
+                    android:id="@+id/tvHistorico"
+                    style="@style/UniforFit.Link"
+                    android:minHeight="40dp"
+                    android:text="Ver histórico completo →"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===================== Aba PAR-Q (RF31.7) ===================== -->
+        <LinearLayout
+            android:id="@+id/painelParq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Teste de PAR-Q"
+                        android:textColor="@color/texto_escuro"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/seloParq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_pill"
+                        android:backgroundTint="@color/verde"
+                        android:paddingStart="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="2dp"
+                        android:text="SEM RISCOS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="9sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDataParq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Respondido em 12/03/2026"
+                    android:textColor="@color/texto_cinza"
+                    android:textSize="11sp" />
+
+                <!-- RF31.7.1 — perguntas e respostas, preenchidas pela Activity -->
+                <LinearLayout
+                    android:id="@+id/listaRespostasParq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <!-- RF31.7.2 -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSolicitarTeste"
+                    style="@style/UniforFit.BotaoSecundario"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:text="Solicitar novo teste"
+                    android:textSize="13sp" />
+
+                <!-- RF31.7.3 -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnVerAnexo"
+                    style="@style/UniforFit.BotaoPrimario"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:text="Ver anexo assinado"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ===================== Aba Medidas (RF31.8) ===================== -->
+        <LinearLayout
+            android:id="@+id/painelMedidas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medidas Corporais"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Última atualização: 10/09/2026"
+                    android:textColor="@color/texto_cinza"
+                    android:textSize="11sp" />
+
+                <!-- RF31.8.1 / RF31.8.2 — preenchidas pela Activity -->
+                <LinearLayout
+                    android:id="@+id/listaMedidas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <!-- RF31.8.3 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnHistoricoMedidas"
+                style="@style/UniforFit.BotaoSecundario"
+                android:layout_height="46dp"
+                android:layout_marginTop="12dp"
+                android:text="Ver histórico de medições anteriores"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- ===================== Aba Evolução (RF31.9) ===================== -->
+        <LinearLayout
+            android:id="@+id/painelEvolucao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Evolução de Carga — Leg Press"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <br.edu.unifor.uniforfit.ui.comum.GraficoBarrasView
+                    android:id="@+id/graficoCargaAluno"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Peso Corporal — últimos 3 meses"
+                    android:textColor="@color/texto_escuro"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <br.edu.unifor.uniforfit.ui.comum.GraficoLinhaView
+                    android:id="@+id/graficoPesoAluno"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- RF31.9.2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card"
+                    android:backgroundTint="@color/azul_claro"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+100%"
+                        android:textColor="@color/azul"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Carga em 7 semanas"
+                        android:textColor="@color/texto_cinza"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card"
+                    android:backgroundTint="@color/azul_claro"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-4,2kg"
+                        android:textColor="@color/azul"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Peso em 3 meses"
+                        android:textColor="@color/texto_cinza"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+    </LinearLayout>
+</ScrollView>

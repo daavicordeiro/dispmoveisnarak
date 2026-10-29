@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Alunos (RF29). Também usada como "Alunos atribuídos a mim" (RF40.2). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".gestor.AlunosActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:layout_marginTop="8dp"
+            android:text="← Painel"
+            android:textSize="12sp" />
+
+        <!-- Título + botão "+" -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:accessibilityHeading="true"
+                android:text="Alunos"
+                android:textColor="@color/texto_escuro"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- RF29.5 -->
+            <TextView
+                android:id="@+id/btnNovoAluno"
+                android:layout_width="44dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_botao_primario"
+                android:clickable="true"
+                android:contentDescription="Cadastrar novo aluno"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Campo de busca (RF29.1) -->
+        <EditText
+            android:id="@+id/etBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/texto_cinza"
+            android:hint="Buscar aluno por nome ou R.A."
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/texto_escuro"
+            android:textColorHint="@color/texto_cinza"
+            android:textSize="13sp" />
+
+        <!-- Lista de alunos (RF29.2), preenchida pela Activity -->
+        <LinearLayout
+            android:id="@+id/listaAlunos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/tvSemResultados"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nenhum aluno encontrado."
+            android:textColor="@color/texto_cinza"
+            android:textSize="13sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

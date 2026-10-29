@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cole estas cores dentro do seu res/values/colors.xml (dentro da tag <resources>) -->
+<resources>
+    <color name="azul">#0B4DF5</color>
+    <color name="azul_claro">#E8F0FE</color>
+    <color name="fundo_cinza">#F7F8FC</color>
+    <color name="texto_escuro">#0B1020</color>
+    <color name="texto_cinza">#6B7280</color>
+    <color name="borda">#E5E7EB</color>
+    <color name="laranja">#F5A623</color>
+    <color name="pill_inativa">#E5E7EB</color>
+    <color name="uf_azul">#0047FF</color>
+    <color name="uf_azul_claro">#E8F0FE</color>
+    <color name="uf_avatar">#E6EFFE</color>
+    <color name="uf_fundo">#FFFFFF</color>
+    <color name="uf_fundo_suave">#F6F8FC</color>
+    <color name="uf_texto">#111827</color>
+    <color name="uf_texto_secundario">#6B7280</color>
+    <color name="uf_borda">#E5E7EB</color>
+    <color name="uf_verde">#16A34A</color>
+    <color name="uf_branco">#FFFFFF</color>
+</resources>

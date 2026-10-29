@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Exercício marcado na tela Detalhe do Treino (RF11.6) -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#220050FF">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/azul_claro" />
+            <corners android:radius="12dp" />
+            <stroke android:width="1.5dp" android:color="@color/azul" />
+        </shape>
+    </item>
+</ripple>

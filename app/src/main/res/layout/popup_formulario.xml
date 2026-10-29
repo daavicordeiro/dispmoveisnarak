@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Conteúdo dos pop-ups com campos (novo lembrete, meus dados, código de verificação).
+     O segundo campo fica escondido quando o pop-up só precisa de um. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/popupRotulo1"
+        style="@style/UniforFit.Label"
+        android:labelFor="@id/popupCampo1" />
+
+    <EditText
+        android:id="@+id/popupCampo1"
+        style="@style/UniforFit.Campo"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences" />
+
+    <TextView
+        android:id="@+id/popupRotulo2"
+        style="@style/UniforFit.Label"
+        android:labelFor="@id/popupCampo2" />
+
+    <EditText
+        android:id="@+id/popupCampo2"
+        style="@style/UniforFit.Campo"
+        android:layout_marginBottom="0dp"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences" />
+</LinearLayout>

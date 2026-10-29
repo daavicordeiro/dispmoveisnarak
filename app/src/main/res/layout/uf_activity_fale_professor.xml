@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/uf_fundo"
+    tools:context=".ui.professor.FaleProfessorActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="36dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="96dp">
+
+            <include
+                android:id="@+id/btnVoltar"
+                layout="@layout/uf_view_botao_voltar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:accessibilityHeading="true"
+                android:text="@string/uf_fale_professor_titulo"
+                android:textColor="@color/uf_texto"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/uf_fale_professor_subtitulo"
+                android:textColor="@color/uf_texto_secundario"
+                android:textSize="13sp" />
+
+            <!-- Card do professor responsável -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@color/uf_fundo_suave"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/ivProfessor"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/uf_bg_avatar"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvNomeProfessor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/uf_texto"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Prof. Carlos Andrade" />
+
+                        <TextView
+                            android:id="@+id/tvCargoProfessor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:textColor="@color/uf_texto_secundario"
+                            android:textSize="12sp"
+                            tools:text="Educador físico responsável" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:labelFor="@id/etMensagem"
+                android:text="@string/uf_sua_mensagem"
+                android:textColor="@color/uf_texto_secundario"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etMensagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:autofillHints=""
+                android:background="@drawable/uf_bg_input"
+                android:gravity="top|start"
+                android:hint="@string/uf_mensagem_hint"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="6"
+                android:minHeight="48dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="13dp"
+                android:textColor="@color/uf_texto"
+                android:textColorHint="@color/uf_texto_secundario"
+                android:textSize="15sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnviar"
+                style="@style/UfBotaoGrande"
+                android:layout_marginTop="24dp"
+                android:text="@string/uf_enviar_mensagem"
+                app:backgroundTint="@color/uf_azul" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/uf_ou_whatsapp"
+                android:textColor="@color/uf_texto_secundario"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWhatsApp"
+                style="@style/UfBotaoGrande"
+                android:layout_marginTop="16dp"
+                android:text="@string/uf_abrir_whatsapp"
+                app:backgroundTint="@color/uf_verde" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/fabAssistente"
+        layout="@layout/uf_view_fab_assistente"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp" />
+</FrameLayout>

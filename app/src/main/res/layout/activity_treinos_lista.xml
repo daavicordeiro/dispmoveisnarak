@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Treinos (RF32 / RF35) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F9FC"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="24dp"
+    android:paddingEnd="20dp"
+    tools:context=".gestor.TreinosListaActivity">
+
+    <TextView
+        android:id="@+id/tvVoltar"
+        style="@style/UniforFit.Link"
+        android:text="← Painel"
+        android:textSize="12sp" />
+
+    <!-- Cabeçalho: título + botão "+" (RF35.3) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:fontFamily="sans-serif-black"
+            android:text="Treinos"
+            android:textColor="#0A0E1A"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/btnAdicionarTreino"
+            android:layout_width="44dp"
+            android:layout_height="32dp"
+            android:background="@drawable/bg_botao_mais"
+            android:clickable="true"
+            android:contentDescription="Cadastrar novo treino"
+            android:focusable="true"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none">
+
+        <!-- Modelos de treino (RF35.1), preenchidos pela Activity -->
+        <LinearLayout
+            android:id="@+id/listaTreinos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp" />
+    </ScrollView>
+</LinearLayout>

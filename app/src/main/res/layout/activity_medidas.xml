@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Medidas Corporais — Etapa 3 de 3 (RF07) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:fillViewport="true"
+    tools:context=".ui.onboarding.MedidasActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            style="@style/UniforFit.Etapa"
+            android:text="ETAPA 3 DE 3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:accessibilityHeading="true"
+            android:text="Medidas Corporais"
+            android:textColor="@color/texto_escuro"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Últimas medidas para personalizar seu treino."
+            android:textColor="@color/texto_cinza"
+            android:textSize="13sp" />
+
+        <!-- Indicador de progresso (3 posições, a 3ª ativa) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Etapa 3 de 3"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/pill_inativa" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="6dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_pill"
+                android:backgroundTint="@color/azul" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:labelFor="@id/etCintura"
+                    android:text="Cintura (cm)" />
+
+                <EditText
+                    android:id="@+id/etCintura"
+                    style="@style/UniforFit.Campo"
+                    android:hint="Ex: 82"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:labelFor="@id/etQuadril"
+                    android:text="Quadril (cm)" />
+
+                <EditText
+                    android:id="@+id/etQuadril"
+                    style="@style/UniforFit.Campo"
+                    android:hint="Ex: 98"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:labelFor="@id/etBraco"
+                    android:text="Braço (cm)" />
+
+                <EditText
+                    android:id="@+id/etBraco"
+                    style="@style/UniforFit.Campo"
+                    android:hint="Ex: 34"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/UniforFit.Label"
+                    android:labelFor="@id/etCoxa"
+                    android:text="Coxa (cm)" />
+
+                <EditText
+                    android:id="@+id/etCoxa"
+                    style="@style/UniforFit.Campo"
+                    android:hint="Ex: 56"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etGordura"
+            android:text="% de gordura corporal (se souber)" />
+
+        <EditText
+            android:id="@+id/etGordura"
+            style="@style/UniforFit.Campo"
+            android:hint="Opcional"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="4" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConcluir"
+            style="@style/UniforFit.BotaoPrimario"
+            android:layout_marginTop="8dp"
+            android:text="Concluir cadastro"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>

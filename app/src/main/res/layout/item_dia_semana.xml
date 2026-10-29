@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Um dia do seletor da Minha Semana: letra + marcador de cor (RF10.1) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="56dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginEnd="3dp"
+    android:layout_weight="1"
+    android:background="@drawable/bg_card_clicavel"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvLetra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/texto_cinza"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/marcador"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_circulo" />
+</LinearLayout>

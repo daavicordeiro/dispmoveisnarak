@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Abas "Evolução de carga" / "Evolução corporal" (RF16 / RF17), mesmo visual das abas da Ficha do Aluno -->
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rgAbasEvolucao"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="horizontal"
+    android:padding="4dp">
+
+    <RadioButton
+        android:id="@+id/rbAbaCarga"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_segmento_selector"
+        android:button="@null"
+        android:gravity="center"
+        android:text="Evolução de carga"
+        android:textColor="@color/cor_segmento"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <RadioButton
+        android:id="@+id/rbAbaCorporal"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_segmento_selector"
+        android:button="@null"
+        android:gravity="center"
+        android:text="Evolução corporal"
+        android:textColor="@color/cor_segmento"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+</RadioGroup>

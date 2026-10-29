@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Evolução de Carga (RF16) e Estado Vazio — Sem Dados (RF16.3). Vai dentro do uf_shell_aluno. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".ui.evolucao.EvolucaoCargaActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="40dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="96dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:accessibilityHeading="true"
+            android:text="Evolução de Carga"
+            android:textColor="@color/texto_escuro"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <include
+            layout="@layout/view_abas_evolucao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp" />
+
+        <!-- Abas dos exercícios acompanhados, preenchidas pela Activity -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/abasExercicios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:id="@+id/painelGrafico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card_branco"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <br.edu.unifor.uniforfit.ui.comum.GraficoBarrasView
+                    android:id="@+id/graficoCarga"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp" />
+            </LinearLayout>
+
+            <!-- RF16.2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_branco"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvEvolucaoPct"
+                        style="@style/UniforFit.IndicadorValor"
+                        android:text="+100%"
+                        android:textColor="@color/verde" />
+
+                    <TextView
+                        android:id="@+id/tvEvolucaoPeriodo"
+                        style="@style/UniforFit.IndicadorRotulo"
+                        android:text="Evolução em 7 semanas" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_branco"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvCargaMaxima"
+                        style="@style/UniforFit.IndicadorValor"
+                        android:text="80kg"
+                        android:textColor="@color/texto_escuro" />
+
+                    <TextView
+                        style="@style/UniforFit.IndicadorRotulo"
+                        android:text="Carga atual máxima" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- RF16.3 — estado vazio -->
+        <LinearLayout
+            android:id="@+id/estadoSemDados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card_branco"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sem dados ainda"
+                android:textColor="@color/verde"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Conclua seu primeiro treino para ver os gráficos aqui."
+                android:textColor="@color/texto_cinza"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

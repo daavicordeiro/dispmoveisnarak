@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Detalhe do Treino (RF11) e Estado Vazio — Sem Treino (RF11.2 / RF11.3).
+     Vai dentro do uf_shell_fab (botão do assistente). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo_cinza"
+    tools:context=".ui.treino.DetalheTreinoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="96dp">
+
+        <!-- RF11.9 — volta identificada com o dia (ex.: "← Quarta-feira") -->
+        <TextView
+            android:id="@+id/tvVoltar"
+            style="@style/UniforFit.Link"
+            android:text="← Quarta-feira"
+            android:textSize="12sp" />
+
+        <!-- Treino com exercícios -->
+        <LinearLayout
+            android:id="@+id/conteudoTreino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNomeTreino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:accessibilityHeading="true"
+                android:text="Treino C — Pernas"
+                android:textColor="@color/texto_escuro"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvResumoTreino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="4 exercícios · ~55 min · Nível intermediário"
+                android:textColor="@color/texto_cinza"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Toque em um exercício para escolher por onde começar."
+                android:textColor="@color/azul"
+                android:textSize="12sp" />
+
+            <!-- Lista de exercícios (RF11.4), preenchida pela Activity -->
+            <LinearLayout
+                android:id="@+id/listaExercicios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnIniciarTreino"
+                style="@style/UniforFit.BotaoPrimario"
+                android:layout_marginTop="20dp"
+                android:text="Iniciar treino"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Estado vazio: nenhum treino atribuído (RF11.2) -->
+        <LinearLayout
+            android:id="@+id/estadoVazio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:accessibilityHeading="true"
+                android:text="Nenhum treino atribuído"
+                android:textColor="@color/texto_escuro"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Seu professor ainda não montou seu treino desta semana."
+                android:textColor="@color/texto_cinza"
+                android:textSize="13sp" />
+
+            <!-- RF11.3 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFalarProfessor"
+                style="@style/UniforFit.BotaoPrimario"
+                android:layout_marginTop="16dp"
+                android:text="Falar com o professor"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

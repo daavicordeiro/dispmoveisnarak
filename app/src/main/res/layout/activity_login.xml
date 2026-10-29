@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Login (RF02) e Login — Erro de Credencial (RF02.3: a mensagem vermelha substitui o subtítulo) -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/branco"
+    android:fillViewport="true"
+    tools:context=".ui.auth.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="88dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="Logo Unifor Fit"
+            android:src="@drawable/logo_unifor"
+            android:tint="@color/azul"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/UniforFit.Titulo"
+            android:layout_marginTop="28dp"
+            android:accessibilityHeading="true"
+            android:text="Entrar" />
+
+        <TextView
+            android:id="@+id/tvSubtitulo"
+            style="@style/UniforFit.Subtitulo"
+            android:text="Use seu R.A. da Unifor para acessar" />
+
+        <TextView
+            android:id="@+id/tvErroLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:accessibilityLiveRegion="polite"
+            android:text="R.A. ou senha incorretos. Tente novamente."
+            android:textColor="@color/vermelho"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:layout_marginTop="28dp"
+            android:labelFor="@id/etRa"
+            android:text="R.A. (Registro Acadêmico)" />
+
+        <EditText
+            android:id="@+id/etRa"
+            style="@style/UniforFit.Campo"
+            android:hint="Ex: 2201234567"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="10" />
+
+        <TextView
+            style="@style/UniforFit.Label"
+            android:labelFor="@id/etSenha"
+            android:text="Senha" />
+
+        <EditText
+            android:id="@+id/etSenha"
+            style="@style/UniforFit.Campo"
+            android:layout_marginBottom="4dp"
+            android:autofillHints="password"
+            android:hint="••••••••"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/tvEsqueciSenha"
+            style="@style/UniforFit.Link"
+            android:text="Esqueci minha senha" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnEntrar"
+            style="@style/UniforFit.BotaoPrimario"
+            android:layout_marginTop="16dp"
+            android:text="Entrar" />
+
+        <TextView
+            android:id="@+id/tvPrimeiroAcesso"
+            style="@style/UniforFit.Link"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="Primeiro acesso? Criar conta" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="24dp" />
+
+        <TextView
+            android:id="@+id/tvAcessoGestor"
+            style="@style/UniforFit.Link"
+            android:layout_gravity="center_horizontal"
+            android:text="Sou da equipe da academia · Painel do Gestor"
+            android:textColor="@color/texto_secundario"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>
