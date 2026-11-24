@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597429127315",
+    "project_id": "uniforfit-unifor",
+    "storage_bucket": "uniforfit-unifor.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597429127315:android:66ecbfeb323ae3ff6f2566",
+        "android_client_info": {
+          "package_name": "br.edu.unifor.uniforfit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLP1nIg3wdPIidH3YWjxyJ5_8xprL7_bc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
