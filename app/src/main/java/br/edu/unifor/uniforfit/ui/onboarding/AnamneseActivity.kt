@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.formatarPeso
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 
 /**
@@ -69,6 +70,7 @@ class AnamneseActivity : BaseActivity() {
         Dados.alturaCm = altura
         Dados.lesao = etLesao.text.toString().trim()
         Dados.objetivo = objetivo
+        Banco.salvarSaude()
 
         // RF05.2 — avança para a etapa 2
         abrir(ParqActivity::class.java) { putExtra(EXTRA_MODO_EDICAO, modoEdicao) }

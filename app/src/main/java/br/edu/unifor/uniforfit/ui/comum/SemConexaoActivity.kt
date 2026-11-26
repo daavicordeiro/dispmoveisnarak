@@ -12,6 +12,8 @@ import br.edu.unifor.uniforfit.core.Rede
  */
 class SemConexaoActivity : BaseActivity() {
 
+    override val exigeSessao = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setConteudoComAssistente(R.layout.activity_sem_conexao)

@@ -25,6 +25,10 @@ class HomeGestorActivity : BaseActivity() {
     /** RF28.1 / RF28.2 — os totais mudam conforme o gestor cadastra ou exclui itens. */
     override fun onResume() {
         super.onResume()
+        atualizarTela()
+    }
+
+    override fun atualizarTela() {
         findViewById<TextView>(R.id.tvNomeGestor).text = Dados.nomeGestor
         findViewById<TextView>(R.id.tvAlunosAtivos).text = Dados.alunos.count { it.status == "Ativo" }.toString()
         findViewById<TextView>(R.id.tvTreinosCadastrados).text = Dados.treinos.size.toString()

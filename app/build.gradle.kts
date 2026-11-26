@@ -43,4 +43,11 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    // Assistente com Gemini (Firebase AI Logic) e App Check exigido por ele
+    implementation(libs.firebase.ai)
+    implementation(libs.firebase.appcheck.debug)
+
+    // Coroutines para as chamadas ao Firebase
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.kotlinx.coroutines.play.services)
 }

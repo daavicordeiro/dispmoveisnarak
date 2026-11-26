@@ -7,9 +7,9 @@ import androidx.core.content.ContextCompat
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.ItemTreino
-import br.edu.unifor.uniforfit.data.Notificacao
 
 /** Personalizar Carga (RF13). */
 class PersonalizarCargaActivity : BaseActivity() {
@@ -88,14 +88,7 @@ class PersonalizarCargaActivity : BaseActivity() {
         val recordeAnterior = chave?.let { Dados.historicoCarga[it]?.maxOrNull()?.toInt() } ?: item.carga
         val bateuRecorde = carga > recordeAnterior
 
-        Dados.ultimaCargaRegistrada[item.exercicio.id] = item.carga
-        item.carga = carga
-
-        if (bateuRecorde) {
-            Dados.notificacoes.add(0, Notificacao(
-                "Novo recorde 🎉", "Você bateu recorde no ${item.exercicio.nome}: ${carga}kg.", "agora", false,
-            ))
-        }
+        Banco.salvarCarga(item, carga, bateuRecorde)
         Popup.mostrar(
             this,
             titulo = if (bateuRecorde) "Novo recorde! 🎉" else "Carga salva!",

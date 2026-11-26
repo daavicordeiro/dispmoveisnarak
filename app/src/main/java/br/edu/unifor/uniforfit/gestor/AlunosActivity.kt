@@ -37,10 +37,12 @@ class AlunosActivity : BaseActivity() {
         montarLista()
     }
 
+    override fun atualizarTela() = montarLista()
+
     private fun montarLista() {
         val busca = etBuscar.text.toString().trim().lowercase()
         val alunos = Dados.alunos.filter { aluno ->
-            (!somenteMeus || aluno.doProfessorLogado) &&
+            (!somenteMeus || aluno.professorUid == Dados.gestorUid) &&
                 (busca.isEmpty() || aluno.nome.lowercase().contains(busca) || aluno.ra.contains(busca))
         }
         val lista = findViewById<LinearLayout>(R.id.listaAlunos)

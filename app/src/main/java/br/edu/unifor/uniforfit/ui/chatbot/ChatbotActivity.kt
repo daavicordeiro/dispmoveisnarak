@@ -10,16 +10,18 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.dp
 import br.edu.unifor.uniforfit.core.formatarDecimal
 import br.edu.unifor.uniforfit.data.Dados
 import java.text.Normalizer
+import kotlinx.coroutines.launch
 
 /**
  * Assistente Unifor Fit (RF09.5.1 a RF09.5.4), aberto pelo botão flutuante ✨ de várias telas.
- * As respostas são locais (por palavra-chave) até existir um serviço de IA no back-end.
+ * As respostas vêm do Gemini ([Assistente]); sem o serviço, usa respostas locais por palavra-chave.
  */
 class ChatbotActivity : BaseActivity() {
 
@@ -27,7 +29,6 @@ class ChatbotActivity : BaseActivity() {
     private lateinit var rolagem: ScrollView
     private lateinit var etMensagem: EditText
     private var bolhaDigitando: View? = null
-    private var respostaPendente: Runnable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +52,6 @@ class ChatbotActivity : BaseActivity() {
         }
     }
 
-    override fun onDestroy() {
-        respostaPendente?.let { lista.removeCallbacks(it) }
-        super.onDestroy()
-    }
-
     private fun enviar(texto: String) {
         val pergunta = texto.trim()
         if (pergunta.isEmpty() || bolhaDigitando != null) return
@@ -65,14 +61,13 @@ class ChatbotActivity : BaseActivity() {
         registrar(pergunta, doUsuario = true)
 
         bolhaDigitando = adicionarBolha("digitando…", doUsuario = false)
-        val resposta = Runnable {
+        lifecycleScope.launch {
+            // Gemini (Firebase AI Logic); sem o serviço, usa as respostas locais
+            val resposta = Assistente.perguntar(pergunta) ?: responder(pergunta)
             bolhaDigitando?.let { lista.removeView(it) }
             bolhaDigitando = null
-            respostaPendente = null
-            registrar(responder(pergunta), doUsuario = false)
+            registrar(resposta, doUsuario = false)
         }
-        respostaPendente = resposta
-        lista.postDelayed(resposta, ATRASO_RESPOSTA_MS)
     }
 
     private fun registrar(texto: String, doUsuario: Boolean) {
@@ -102,7 +97,8 @@ class ChatbotActivity : BaseActivity() {
 
     private fun responder(pergunta: String): String {
         val texto = Normalizer.normalize(pergunta.lowercase(), Normalizer.Form.NFD).replace(Regex("\\p{M}"), "")
-        val legPress = Dados.exercicio(1)
+        val legPress = Dados.exercicios.firstOrNull { it.id == 1 }
+            ?: return "Abra o treino e toque no ícone \"i\" do exercício para ver como executar."
         val hoje = Dados.diaDeHoje
         return when {
             "leg" in texto -> "No ${legPress.nome} (${legPress.maquina}): ${legPress.instrucoes} " +
@@ -119,7 +115,7 @@ class ChatbotActivity : BaseActivity() {
             "descanso" in texto || "intervalo" in texto ->
                 "Ao concluir uma série o app conta o intervalo de descanso sozinho. Se já estiver pronto, toque em \"Pular descanso\"."
             "professor" in texto ->
-                "Você fala com o ${Dados.nomeGestor} em Perfil → Fale com seu Professor, por mensagem ou WhatsApp."
+                "Você fala com o ${Dados.professorDoAluno} em Perfil → Fale com seu Professor, por mensagem ou WhatsApp."
             "treino" in texto || "hoje" in texto ->
                 "Seu treino de hoje é o ${hoje.titulo}: ${hoje.descricao}. Toque em \"Treino de hoje\" no Início para começar."
             texto.startsWith("oi") || texto.startsWith("ola") ->
@@ -130,7 +126,6 @@ class ChatbotActivity : BaseActivity() {
     }
 
     private companion object {
-        const val ATRASO_RESPOSTA_MS = 700L
         val conversa = mutableListOf<Pair<String, Boolean>>()
     }
 }

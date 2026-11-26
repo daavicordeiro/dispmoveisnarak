@@ -17,6 +17,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import br.edu.unifor.uniforfit.R
+import br.edu.unifor.uniforfit.data.Banco
+import br.edu.unifor.uniforfit.data.Dados
+import br.edu.unifor.uniforfit.ui.auth.SplashActivity
 import br.edu.unifor.uniforfit.ui.chatbot.ChatbotActivity
 import br.edu.unifor.uniforfit.ui.comum.SemConexaoActivity
 import br.edu.unifor.uniforfit.ui.evolucao.EvolucaoCargaActivity
@@ -38,6 +41,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /** Telas de fundo escuro (execução da série, login do gestor...) usam ícones claros na barra de status. */
     protected open val telaEscura = false
+
+    /**
+     * Telas que dependem dos dados carregados no login. Se o Android encerrar o app em segundo plano,
+     * a sessão em memória se perde e o app volta para a abertura em vez de mostrar dados vazios.
+     */
+    protected open val exigeSessao = true
 
     private lateinit var transicao: Transicao
     private var fonteAplicada = TamanhoFonte.NORMAL
@@ -68,7 +77,15 @@ abstract class BaseActivity : AppCompatActivity() {
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, transicao.fecharEntrada, transicao.fecharSaida)
         }
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        if (exigeSessao && !Dados.sessaoCarregada) {
+            startActivity(Intent(this, SplashActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+            finish()
+        }
     }
+
+    /** Chamado quando o banco avisa que algo mudou (ex.: o gestor alterou o treino). */
+    protected open fun atualizarTela() = Unit
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -104,6 +121,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onResume()
         // Se o tamanho da fonte mudou em Acessibilidade, as telas da pilha se redesenham ao voltar.
         if (Preferencias.tamanhoFonte(this) != fonteAplicada) recreate()
+        Banco.aoMudar = { runOnUiThread { if (!isFinishing) atualizarTela() } }
     }
 
     override fun finish() {

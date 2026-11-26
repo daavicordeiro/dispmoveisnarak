@@ -7,6 +7,7 @@ import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
 import br.edu.unifor.uniforfit.core.Transicao
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.ui.perfil.PerfilActivity
 
@@ -59,6 +60,7 @@ class MedidasActivity : BaseActivity() {
         Dados.braco = etBraco.text.toString()
         Dados.coxa = etCoxa.text.toString()
         Dados.gordura = etGordura.text.toString()
+        Banco.salvarSaude(finalizarOnboarding = !modoEdicao, novaMedicao = true)
 
         // RF07.2 — encerra o onboarding (→ Apresentação) ou volta ao Perfil quando era edição
         if (modoEdicao) {
@@ -70,7 +72,6 @@ class MedidasActivity : BaseActivity() {
                 cancelavel = false,
             ) { voltarPara(PerfilActivity::class.java) }
         } else {
-            Dados.onboardingPendente -= Dados.raAluno
             abrirComoInicio(ApresentacaoActivity::class.java, Transicao.FADE)
         }
     }

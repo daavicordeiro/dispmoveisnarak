@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.ui.auth.LoginActivity
 import br.edu.unifor.uniforfit.ui.onboarding.AnamneseActivity
@@ -69,13 +70,20 @@ class PerfilActivity : BaseActivity() {
                 tipo = Popup.Tipo.PERIGO,
                 botao = getString(R.string.uf_sair),
                 botaoSecundario = getString(R.string.uf_cancelar),
-            ) { abrirComoInicio(LoginActivity::class.java) }
+            ) {
+                Banco.sair()
+                abrirComoInicio(LoginActivity::class.java)
+            }
         }
     }
 
     /** RF21.1 — indicadores atualizados depois de cada treino. */
     override fun onResume() {
         super.onResume()
+        atualizarTela()
+    }
+
+    override fun atualizarTela() {
         findViewById<TextView>(R.id.tvNome).text = Dados.nomeAluno
         findViewById<TextView>(R.id.tvRa).text = getString(R.string.uf_ra_formato, Dados.raAluno)
         preencherIndicador(R.id.statRanking, getString(R.string.uf_ranking_formato, Dados.posicaoRanking), R.string.uf_rotulo_ranking)

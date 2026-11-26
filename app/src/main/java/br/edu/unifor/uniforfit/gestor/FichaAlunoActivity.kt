@@ -14,7 +14,9 @@ import br.edu.unifor.uniforfit.core.dp
 import br.edu.unifor.uniforfit.core.formatarPeso
 import br.edu.unifor.uniforfit.data.Aluno
 import br.edu.unifor.uniforfit.data.Dados
-import br.edu.unifor.uniforfit.data.Notificacao
+import br.edu.unifor.uniforfit.data.Banco
+import kotlin.math.abs
+import kotlin.math.roundToInt
 import br.edu.unifor.uniforfit.ui.comum.GraficoBarrasView
 import br.edu.unifor.uniforfit.ui.comum.GraficoLinhaView
 
@@ -48,9 +50,6 @@ class FichaAlunoActivity : BaseActivity() {
         findViewById<View>(R.id.btnVerAnexo).setOnClickListener { mostrarAnexo() }
         findViewById<View>(R.id.btnHistoricoMedidas).setOnClickListener { mostrarHistoricoMedidas() }
 
-        montarMedidas()
-        findViewById<GraficoBarrasView>(R.id.graficoCargaAluno).valores = Dados.historicoCarga["Leg Press"].orEmpty()
-        findViewById<GraficoLinhaView>(R.id.graficoPesoAluno).valores = Dados.historicoPeso
     }
 
     /** Dados cadastrais podem ter mudado em "Editar Aluno"; se o aluno foi excluído, a ficha fecha. */
@@ -63,15 +62,16 @@ class FichaAlunoActivity : BaseActivity() {
         findViewById<TextView>(R.id.tvNomeAluno).text = aluno.nome
         findViewById<TextView>(R.id.tvInfoAluno).text = "R.A. ${aluno.ra} · ${aluno.status} desde ${aluno.desde}"
 
-        findViewById<TextView>(R.id.tvPeso).text = "${Dados.pesoKg.formatarPeso()} kg"
-        findViewById<TextView>(R.id.tvAltura).text = "${Dados.alturaCm} cm"
+        // RF31.2 — dados da anamnese ("—" enquanto o aluno não preencher)
+        findViewById<TextView>(R.id.tvPeso).text = if (aluno.pesoKg > 0) "${aluno.pesoKg.formatarPeso()} kg" else "—"
+        findViewById<TextView>(R.id.tvAltura).text = if (aluno.alturaCm > 0) "${aluno.alturaCm} cm" else "—"
         findViewById<TextView>(R.id.tvObjetivoLesao).text =
-            "Objetivo: ${Dados.objetivo} · " + Dados.lesao.ifBlank { "Sem restrições médicas" }
-        findViewById<TextView>(R.id.tvCintura).text = "${Dados.cintura} cm"
-        findViewById<TextView>(R.id.tvQuadril).text = "${Dados.quadril} cm"
+            "Objetivo: ${aluno.objetivo.ifBlank { "—" }} · " + aluno.lesao.ifBlank { "Sem restrições médicas" }
+        findViewById<TextView>(R.id.tvCintura).text = aluno.cintura.ifBlank { null }?.let { "$it cm" } ?: "—"
+        findViewById<TextView>(R.id.tvQuadril).text = aluno.quadril.ifBlank { null }?.let { "$it cm" } ?: "—"
 
         // RF31.7 — selo de risco
-        val comRestricao = Dados.respostasParq.any { it == true }
+        val comRestricao = aluno.respostasParq.any { it == true }
         listOf(R.id.seloParq, R.id.seloParqResumo).forEach { id ->
             findViewById<TextView>(id).apply {
                 text = if (comRestricao) "COM RESTRIÇÃO" else "SEM RISCOS"
@@ -83,8 +83,32 @@ class FichaAlunoActivity : BaseActivity() {
         } else {
             "Todas as respostas indicaram “Não” — liberado para atividade física sem restrições."
         }
-        findViewById<TextView>(R.id.tvDataParq).text = "Respondido em ${Dados.parqRespondidoEm}"
-        montarRespostasParq()
+        findViewById<TextView>(R.id.tvDataParq).text =
+            if (aluno.parqRespondidoEm.isBlank()) "Ainda não respondido" else "Respondido em ${aluno.parqRespondidoEm}"
+        montarRespostasParq(aluno)
+        montarMedidas(aluno)
+        montarEvolucao(aluno)
+    }
+
+    /** RF31.4 / RF31.9 — gráficos e indicadores de evolução do aluno. */
+    private fun montarEvolucao(aluno: Aluno) {
+        val cargas = aluno.historicoCarga["Leg Press"].orEmpty()
+        val pesos = aluno.historicoPeso
+        findViewById<GraficoBarrasView>(R.id.graficoCargaAluno).valores = cargas
+        findViewById<GraficoLinhaView>(R.id.graficoPesoAluno).valores = pesos
+        val pct = if (cargas.size >= 2 && cargas.first() > 0) {
+            ((cargas.last() - cargas.first()) / cargas.first() * 100).roundToInt()
+        } else 0
+        val textoPct = (if (pct >= 0) "+" else "") + "$pct%"
+        val variacao = (pesos.lastOrNull() ?: 0f) - (pesos.firstOrNull() ?: 0f)
+        val textoPeso = (if (variacao > 0) "+" else if (variacao < 0) "-" else "") +
+            abs(variacao.toDouble()).formatarPeso() + "kg"
+        findViewById<TextView>(R.id.tvResumoCargaPct).text = textoPct
+        findViewById<TextView>(R.id.tvEvoCargaPct).text = textoPct
+        findViewById<TextView>(R.id.tvResumoCargaRotulo).text = "Carga em ${cargas.size} sem."
+        findViewById<TextView>(R.id.tvEvoCargaRotulo).text = "Carga em ${cargas.size} semanas"
+        findViewById<TextView>(R.id.tvResumoPesoVar).text = textoPeso
+        findViewById<TextView>(R.id.tvEvoPesoVar).text = textoPeso
     }
 
     private fun aluno(): Aluno? = Dados.alunos.firstOrNull { it.ra == ra }
@@ -97,20 +121,22 @@ class FichaAlunoActivity : BaseActivity() {
     }
 
     /** RF31.7.1 — cada pergunta com a resposta do aluno. */
-    private fun montarRespostasParq() {
+    private fun montarRespostasParq(aluno: Aluno) {
         val lista = findViewById<LinearLayout>(R.id.listaRespostasParq)
         lista.removeAllViews()
         Dados.perguntasParq.forEachIndexed { i, pergunta ->
-            val sim = Dados.respostasParq.getOrNull(i) == true
+            val sim = aluno.respostasParq.getOrNull(i) == true
             lista.addView(linha(pergunta, if (sim) "Sim" else "Não", if (sim) R.color.laranja else R.color.verde, emSelo = true))
         }
     }
 
     /** RF31.8.1 / RF31.8.2 — valor atual e variação colorida. */
-    private fun montarMedidas() {
+    private fun montarMedidas(aluno: Aluno) {
+        findViewById<TextView>(R.id.tvUltimaMedicao).text =
+            aluno.medicoes.firstOrNull()?.let { "Última atualização: ${it.data}" } ?: "Nenhuma medição registrada"
         val lista = findViewById<LinearLayout>(R.id.listaMedidas)
         lista.removeAllViews()
-        Dados.medidasFicha.forEach { medida ->
+        Dados.medidasDe(aluno).forEach { medida ->
             lista.addView(linha(
                 "${medida.nome}   ${medida.valor}", medida.variacao,
                 if (medida.melhorou) R.color.verde else R.color.laranja, emSelo = false,
@@ -164,11 +190,7 @@ class FichaAlunoActivity : BaseActivity() {
             botao = "Enviar solicitação",
             botaoSecundario = "Cancelar",
         ) {
-            if (aluno.ra == Dados.raAluno) {
-                Dados.notificacoes.add(0, Notificacao(
-                    "Novo teste de PAR-Q", "Seu professor pediu que você atualize sua anamnese e o PAR-Q.", "agora", false,
-                ))
-            }
+            Banco.solicitarNovoParq(aluno)
             Popup.mostrar(
                 this,
                 titulo = "Solicitação enviada",
@@ -182,12 +204,12 @@ class FichaAlunoActivity : BaseActivity() {
     private fun mostrarAnexo() {
         val aluno = aluno() ?: return
         val respostas = Dados.perguntasParq.mapIndexed { i, pergunta ->
-            "${i + 1}. $pergunta  →  ${if (Dados.respostasParq.getOrNull(i) == true) "Sim" else "Não"}"
+            "${i + 1}. $pergunta  →  ${if (aluno.respostasParq.getOrNull(i) == true) "Sim" else "Não"}"
         }.joinToString("\n")
         Popup.mostrar(
             this,
             titulo = "PAR-Q assinado",
-            mensagem = "${aluno.nome} · R.A. ${aluno.ra}\nRespondido em ${Dados.parqRespondidoEm}\n\n$respostas\n\n" +
+            mensagem = "${aluno.nome} · R.A. ${aluno.ra}\nRespondido em ${aluno.parqRespondidoEm.ifBlank { "—" }}\n\n$respostas\n\n" +
                 "Assinado digitalmente pelo aluno no aplicativo.",
             tipo = Popup.Tipo.INFO,
             botao = "Fechar",
@@ -196,11 +218,12 @@ class FichaAlunoActivity : BaseActivity() {
 
     /** RF31.8.3 — série histórica das medidas. */
     private fun mostrarHistoricoMedidas() {
+        val aluno = aluno() ?: return
         Popup.mostrar(
             this,
             titulo = "Histórico de medições",
             mensagem = "Data  ·  Cintura · Quadril · Braço · Coxa · % Gordura\n\n" +
-                Dados.historicoMedicoes.joinToString("\n"),
+                Dados.historicoMedicoesDe(aluno).joinToString("\n").ifEmpty { "Nenhuma medição registrada." },
             tipo = Popup.Tipo.INFO,
             botao = "Fechar",
         )

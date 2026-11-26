@@ -1,12 +1,94 @@
 rules_version = '2';
 
-// Regras iniciais: apenas usuários autenticados (Firebase Authentication)
-// podem ler e escrever. Refinar por coleção (alunos, gestores, treinos...)
-// quando as coleções forem criadas.
+// Regras do Unifor Fit.
+//  - Antes do login só é possível ler `ras/{ra}` (o e-mail da conta, usado no login pelo R.A.)
+//    e `config` (marcação de que o banco já foi preparado).
+//  - Cada aluno só lê e altera os próprios dados; o cadastro (nome, status, treino...) é do gestor.
+//  - Gestor é quem tem documento em `gestores/{uid}`; só os e-mails da lista podem se tornar gestor.
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+
+    function logado() {
+      return request.auth != null;
+    }
+
+    function gestor() {
+      return logado() && exists(/databases/$(database)/documents/gestores/$(request.auth.uid));
+    }
+
+    function donoDoRa(ra) {
+      return logado()
+        && get(/databases/$(database)/documents/alunos/$(ra)).data.uid == request.auth.uid;
+    }
+
+    // Campos do cadastro que só o gestor pode alterar.
+    function camposDoCadastro() {
+      return ['nome', 'ra', 'email', 'status', 'turma', 'treinoId', 'desde', 'professorUid', 'plano', 'uid'];
+    }
+
+    match /config/{doc} {
+      allow read: if true;
+      allow write: if gestor();
+    }
+
+    match /ras/{ra} {
+      allow read: if true;
+      allow write: if gestor();
+      // Primeiro acesso (RF03): o aluno marca que criou a conta com o próprio e-mail.
+      allow update: if logado()
+        && resource.data.temConta == false
+        && request.resource.data.temConta == true
+        && request.resource.data.email == request.auth.token.email;
+    }
+
+    match /alunos/{ra} {
+      allow read: if gestor() || (logado() && resource.data.uid == request.auth.uid);
+      allow create, delete: if gestor();
+      allow update: if gestor()
+        // O aluno altera saúde, cargas e totais, nunca o cadastro.
+        || (logado() && resource.data.uid == request.auth.uid
+            && !request.resource.data.diff(resource.data).affectedKeys().hasAny(camposDoCadastro()))
+        // Primeiro acesso: liga a conta recém-criada ao cadastro.
+        || (logado() && resource.data.uid == ''
+            && request.resource.data.uid == request.auth.uid
+            && request.resource.data.email == request.auth.token.email
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['uid', 'email', 'onboardingPendente']));
+
+      match /notificacoes/{id} {
+        allow read, write: if gestor() || donoDoRa(ra);
+      }
+    }
+
+    match /ranking/{ra} {
+      allow read: if logado();
+      allow write: if gestor() || donoDoRa(ra);
+    }
+
+    match /gestores/{uid} {
+      allow read: if logado();
+      allow create: if logado() && request.auth.uid == uid
+        && request.auth.token.email in ['professor@unifor.br'];
+      allow update: if logado() && request.auth.uid == uid;
+    }
+
+    match /exercicios/{id} {
+      allow read: if logado();
+      allow write: if gestor();
+    }
+
+    match /treinos/{id} {
+      allow read: if logado();
+      allow write: if gestor();
+    }
+
+    match /lembretes/{id} {
+      allow read: if logado();
+      allow write: if gestor();
+    }
+
+    match /mensagens/{id} {
+      allow create: if logado() && request.resource.data.remetenteUid == request.auth.uid;
+      allow read: if gestor();
     }
   }
 }

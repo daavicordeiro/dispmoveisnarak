@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.ItemTreino
 import br.edu.unifor.uniforfit.data.Treino
@@ -129,17 +130,19 @@ class EditarTreinoActivity : FormularioActivity() {
         val atual = treino
         val gravar = {
             if (atual == null) {
-                Dados.treinos.add(Treino(
+                val novo = Treino(
                     Dados.proximoIdTreino(), nome, spCategoria.valor, spNivel.valor,
                     duracaoMin = itens.size * 12, alunos = 0, itens = itens.toMutableList(),
-                ))
+                )
+                Dados.treinos.add(novo)
+                Banco.salvarTreino(novo)
             } else {
-                Dados.alunos.filter { it.treino == atual.nome }.forEach { it.treino = nome }
                 atual.nome = nome
                 atual.categoria = spCategoria.valor
                 atual.nivel = spNivel.valor
                 atual.itens.clear()
                 atual.itens.addAll(itens)
+                Banco.salvarTreino(atual)
             }
             voltarPara(TreinosListaActivity::class.java) {
                 putExtra(EXTRA_AVISO, if (atual == null) "Treino criado!" else "Treino salvo e enviado aos alunos.")

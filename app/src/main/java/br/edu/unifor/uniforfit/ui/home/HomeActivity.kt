@@ -14,6 +14,7 @@ import br.edu.unifor.uniforfit.ui.notificacoes.NotificacoesActivity
 import br.edu.unifor.uniforfit.ui.ranking.RankingActivity
 import br.edu.unifor.uniforfit.ui.treino.DetalheTreinoActivity
 import br.edu.unifor.uniforfit.core.Transicao
+import br.edu.unifor.uniforfit.core.formatarPeso
 import java.util.Calendar
 
 /** Início (RF09) — base da pilha do aluno; as outras abas da navbar abrem por cima dela. */
@@ -37,12 +38,27 @@ class HomeActivity : BaseActivity() {
     /** Os números mudam depois de um treino concluído, por isso são atualizados ao voltar para cá. */
     override fun onResume() {
         super.onResume()
+        atualizarTela()
+    }
+
+    override fun atualizarTela() {
         findViewById<TextView>(R.id.tvSaudacao).text = "${saudacao()},"
         findViewById<TextView>(R.id.tvNomeAluno).text = Dados.primeiroNome
         findViewById<TextView>(R.id.tvTreinosMes).text = Dados.treinosMes.toString()
         findViewById<TextView>(R.id.tvCargaEvoluida).text =
-            "+" + Dados.cargaEvoluidaKg.toString().replace('.', ',') + "kg"
-        findViewById<TextView>(R.id.tvPosicaoRanking).text = "#${Dados.posicaoRanking}"
+            "+" + Dados.cargaEvoluidaKg.formatarPeso() + "kg"
+        val posicao = Dados.posicaoRanking
+        findViewById<TextView>(R.id.tvPosicaoRanking).text = "#$posicao"
+        // RF09.4 — variação em relação à posição da semana anterior
+        val anterior = Dados.aluno.posicaoSemanaPassada
+        val variacao = if (anterior > 0 && posicao > 0) anterior - posicao else 0
+        findViewById<TextView>(R.id.tvVariacaoRanking).text = when {
+            variacao > 1 -> "Você subiu $variacao posições"
+            variacao == 1 -> "Você subiu 1 posição"
+            variacao == -1 -> "Você caiu 1 posição"
+            variacao < -1 -> "Você caiu ${-variacao} posições"
+            else -> "Você manteve sua posição"
+        }
         findViewById<View>(R.id.badgeNotificacoes).isVisible = Dados.notificacoes.any { !it.lida }
 
         val hoje = Dados.diaDeHoje

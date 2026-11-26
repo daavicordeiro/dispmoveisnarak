@@ -44,6 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:id="@+id/tvNome2"
                     android:text="Marina"
                     android:textColor="@color/texto_escuro"
                     android:textSize="11sp"
@@ -52,6 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvPts2"
                     android:text="980 pts"
                     android:textColor="@color/texto_cinza"
                     android:textSize="10sp" />
@@ -85,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:id="@+id/tvNome1"
                     android:text="Lucas"
                     android:textColor="@color/texto_escuro"
                     android:textSize="11sp"
@@ -93,6 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvPts1"
                     android:text="1240 pts"
                     android:textColor="@color/texto_cinza"
                     android:textSize="10sp" />
@@ -130,6 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:id="@+id/tvNome3"
                     android:text="Rafael"
                     android:textColor="@color/texto_escuro"
                     android:textSize="11sp"
@@ -138,6 +143,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvPts3"
                     android:text="370 pts"
                     android:textColor="@color/texto_cinza"
                     android:textSize="10sp" />
@@ -156,125 +162,13 @@
 
         </LinearLayout>
 
-        <!-- Demais posições (a linha "Você" fica destacada) -->
+        <!-- Demais posições, montadas pela RankingActivity (a linha "Você" fica destacada) -->
         <LinearLayout
+            android:id="@+id/listaRanking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_card"
-            android:backgroundTint="@color/azul_claro"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:text="#4"
-                android:textColor="@color/texto_cinza"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/person_png"
-                android:backgroundTint="@color/black" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:text="Você"
-                android:textColor="@color/texto_escuro"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <!-- RF19.2 — pontuação recalculada a cada treino concluído -->
-            <TextView
-                android:id="@+id/tvPontosVoce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="740 pts"
-                android:textColor="@color/azul"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:text="#5"
-                android:textColor="@color/texto_cinza"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/person_png"
-                android:backgroundTint="#000000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="Beatriz"
-                android:textColor="@color/texto_escuro"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <TextView
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:text="#6"
-                android:textColor="@color/texto_cinza"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@drawable/person_png"
-                android:backgroundTint="#000000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="João"
-                android:textColor="@color/texto_escuro"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        </LinearLayout>
+            android:orientation="vertical" />
 
     </LinearLayout>
 </ScrollView>

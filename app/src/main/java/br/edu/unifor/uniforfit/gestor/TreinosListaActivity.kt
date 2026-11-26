@@ -26,7 +26,8 @@ class TreinosListaActivity : BaseActivity() {
             val card = layoutInflater.inflate(R.layout.item_treino_gestor, lista, false)
             card.findViewById<TextView>(R.id.tvNome).text = treino.nome
             card.findViewById<TextView>(R.id.tvCategoria).text = "${treino.categoria} · ${treino.nivel}"
-            card.findViewById<TextView>(R.id.tvAlunos).text = "${treino.alunos} alunos"
+            card.findViewById<TextView>(R.id.tvAlunos).text =
+                if (treino.alunos == 1) "1 aluno" else "${treino.alunos} alunos"
             // RF35.2
             card.setOnClickListener {
                 abrir(EditarTreinoActivity::class.java) { putExtra(EditarTreinoActivity.EXTRA_ID, treino.id) }

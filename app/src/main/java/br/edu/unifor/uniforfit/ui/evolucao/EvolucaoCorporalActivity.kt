@@ -63,7 +63,7 @@ class EvolucaoCorporalActivity : BaseActivity() {
         super.onResume()
         findViewById<GraficoLinhaView>(R.id.graficoPeso).valores = Dados.historicoPeso
 
-        val variacao = Dados.historicoPeso.last() - Dados.historicoPeso.first()
+        val variacao = (Dados.historicoPeso.lastOrNull() ?: 0f) - (Dados.historicoPeso.firstOrNull() ?: 0f)
         findViewById<TextView>(R.id.tvVariacaoPeso).apply {
             text = (if (variacao > 0) "+" else "-") + abs(variacao.toDouble()).formatarDecimal() + "kg"
             setTextColor(ContextCompat.getColor(context, if (variacao <= 0) R.color.verde else R.color.azul))

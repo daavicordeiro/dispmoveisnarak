@@ -11,6 +11,7 @@ import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
 import br.edu.unifor.uniforfit.core.esconderTeclado
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 
 /** Fale com seu Professor (RF22). Aberta pelo Perfil e pelo estado vazio "Sem treino". */
@@ -23,7 +24,7 @@ class FaleProfessorActivity : BaseActivity() {
         setContentView(R.layout.uf_activity_fale_professor)
 
         // RF22.1
-        findViewById<TextView>(R.id.tvNomeProfessor).text = Dados.nomeGestor
+        findViewById<TextView>(R.id.tvNomeProfessor).text = Dados.professorDoAluno
         findViewById<TextView>(R.id.tvCargoProfessor).text = "Educador físico responsável"
 
         etMensagem = findViewById(R.id.etMensagem)
@@ -39,12 +40,13 @@ class FaleProfessorActivity : BaseActivity() {
             return
         }
         exigirConexao {
+            Banco.enviarMensagem(etMensagem.text.toString().trim())
             etMensagem.text.clear()
             esconderTeclado()
             Popup.mostrar(
                 this,
                 titulo = getString(R.string.uf_mensagem_enviada),
-                mensagem = "O ${Dados.nomeGestor} vai responder pelas suas notificações.",
+                mensagem = "O ${Dados.professorDoAluno} vai responder pelas suas notificações.",
                 botao = "OK",
             )
         }

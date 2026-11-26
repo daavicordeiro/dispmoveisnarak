@@ -28,6 +28,10 @@ class MinhaSemanaActivity : BaseActivity() {
     /** Remontado ao voltar: concluir o treino de hoje muda o status do dia. */
     override fun onResume() {
         super.onResume()
+        atualizarTela()
+    }
+
+    override fun atualizarTela() {
         montarSeletor()
         montarLista()
     }

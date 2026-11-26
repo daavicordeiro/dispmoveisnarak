@@ -3,169 +3,136 @@ package br.edu.unifor.uniforfit.data
 import android.graphics.Bitmap
 import android.net.Uri
 import br.edu.unifor.uniforfit.R
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /** Foto de progresso vinda da câmera ([bitmap]) ou da galeria ([uri]). */
 data class FotoProgresso(val bitmap: Bitmap? = null, val uri: Uri? = null)
 
 /**
- * Dados de demonstração em memória (o app ainda não tem back-end).
- * Os valores seguem os exemplos do protótipo no Figma.
+ * Estado da sessão em memória. É carregado do Firestore pelo [Banco] no login e
+ * cada alteração feita nas telas é gravada de volta no Firestore pelo próprio [Banco].
  */
 object Dados {
 
-    // ---------- Credenciais de demonstração ----------
+    const val PONTOS_POR_TREINO = 50
+
+    /** Contas criadas pelo [Semeador] na primeira execução. */
     const val RA_DEMO = "2201234567"
     const val SENHA_DEMO = "12345678"
     const val EMAIL_GESTOR = "professor@unifor.br"
     const val SENHA_GESTOR = "12345678"
 
-    /** R.A. → senha. O "Primeiro acesso" cadastra novas contas aqui. */
-    val contas = mutableMapOf(RA_DEMO to SENHA_DEMO)
+    // ---------- Sessão ----------
+    var papel: Papel? = null
+    val sessaoCarregada get() = papel != null
 
-    /** Contas criadas que ainda não concluíram anamnese, PAR-Q e medidas. */
-    val onboardingPendente = mutableSetOf<String>()
+    enum class Papel { ALUNO, GESTOR }
 
-    fun loginAlunoValido(ra: String, senha: String) = contas[ra] == senha
+    /** Aluno logado (no app do aluno). */
+    var aluno: Aluno = Aluno("", "", "", "", "", null, "", "")
 
-    /** Troca o aluno logado (o restante dos dados de demonstração é compartilhado). */
-    fun entrarComo(ra: String) {
-        raAluno = ra
-        alunos.firstOrNull { it.ra == ra }?.let { nomeAluno = it.nome }
-    }
+    // Atalhos usados pelas telas do aluno
+    val nomeAluno get() = aluno.nome
+    val raAluno get() = aluno.ra
+    var pesoKg: Double
+        get() = aluno.pesoKg
+        set(v) { aluno.pesoKg = v }
+    var alturaCm: Int
+        get() = aluno.alturaCm
+        set(v) { aluno.alturaCm = v }
+    var lesao: String
+        get() = aluno.lesao
+        set(v) { aluno.lesao = v }
+    var objetivo: String
+        get() = aluno.objetivo
+        set(v) { aluno.objetivo = v }
+    val respostasParq get() = aluno.respostasParq
+    var parqRespondidoEm: String
+        get() = aluno.parqRespondidoEm
+        set(v) { aluno.parqRespondidoEm = v }
+    var cintura: String
+        get() = aluno.cintura
+        set(v) { aluno.cintura = v }
+    var quadril: String
+        get() = aluno.quadril
+        set(v) { aluno.quadril = v }
+    var braco: String
+        get() = aluno.braco
+        set(v) { aluno.braco = v }
+    var coxa: String
+        get() = aluno.coxa
+        set(v) { aluno.coxa = v }
+    var gordura: String
+        get() = aluno.gordura
+        set(v) { aluno.gordura = v }
+    val historicoPeso get() = aluno.historicoPeso
+    val historicoCarga get() = aluno.historicoCarga
+    val ultimaCargaRegistrada get() = aluno.ultimaCarga
+    val treinosMes get() = if (aluno.mesRef == mesAtual()) aluno.treinosMes else 0
+    val cargaEvoluidaKg get() = aluno.cargaEvoluidaKg
+    val treinosTotais get() = aluno.treinosTotais
+    val pontos get() = aluno.pontos
+    val primeiroNome get() = aluno.nome.substringBefore(" ")
 
-    fun loginGestorValido(email: String, senha: String) =
-        email.equals(EMAIL_GESTOR, ignoreCase = true) && senha == SENHA_GESTOR
+    /** Nome do professor responsável pelo aluno logado (RF22.1). */
+    var professorDoAluno = ""
 
-    /** RF03.6 — só R.A. de alunos matriculados podem criar conta. */
-    fun raMatriculado(ra: String) = alunos.any { it.ra == ra }
+    val fotosProgresso = mutableListOf<FotoProgresso>()
 
-    fun emailDoRa(ra: String) = alunos.firstOrNull { it.ra == ra }?.email
-
-    // ---------- Aluno logado ----------
-    var nomeAluno = "Giuseppe Chinelate"
-    var raAluno = RA_DEMO
-    var pesoKg = 72.0
-    var alturaCm = 175
-    var lesao = ""
-    var objetivo = "Hipertrofia"
-    val respostasParq = mutableListOf<Boolean?>(false, false, false)
-    var parqRespondidoEm = "12/03/2026"
-    var cintura = "82"
-    var quadril = "98"
-    var braco = "34"
-    var coxa = "56"
-    var gordura = "18"
-
-    var treinosMes = 12
-    var cargaEvoluidaKg = 3.5
-    var posicaoRanking = 4
-    var treinosTotais = 32
-    var pontos = 740
-    var treinoDeHojeConcluido = false
-
-    const val PONTOS_POR_TREINO = 50
-
-    val primeiroNome get() = nomeAluno.substringBefore(" ")
-
-    // ---------- Catálogo de exercícios ----------
-    val exercicios = mutableListOf(
-        Exercicio(1, "Leg Press 45°", "Máquina 12 — Leg Press", "Pernas", "Setor de Pernas",
-            "Ajuste o encosto, posicione os pés na plataforma na largura dos ombros e empurre sem travar os joelhos."),
-        Exercicio(2, "Cadeira Extensora", "Máquina 14 — Extensora", "Pernas", "Setor de Pernas",
-            "Apoie as costas no encosto, alinhe o joelho ao eixo da máquina e estenda as pernas de forma controlada."),
-        Exercicio(3, "Cadeira Flexora", "Máquina 15 — Flexora", "Pernas", "Setor de Pernas",
-            "Deite-se com o rolo logo acima dos calcanhares e flexione os joelhos sem tirar o quadril do banco."),
-        Exercicio(4, "Agachamento Livre", "Área Livre — Squat Rack 2", "Pernas", "Área Livre",
-            "Barra apoiada no trapézio e pés na largura dos ombros; desça com o tronco firme até as coxas ficarem paralelas ao chão."),
-        Exercicio(5, "Supino Reto", "Máquina 3 — Supino", "Peito", "Setor de Peito",
-            "Deite no banco com os pés no chão, desça a barra até a linha do peito e empurre estendendo os braços."),
-        Exercicio(6, "Crucifixo Máquina", "Máquina 5 — Peck Deck", "Peito", "Setor de Peito",
-            "Mantenha os cotovelos levemente flexionados e aproxime os braços à frente do peito, voltando devagar."),
-        Exercicio(7, "Tríceps Corda", "Polia 2 — Cross Over", "Braços", "Setor de Polias",
-            "Cotovelos colados ao corpo; estenda os braços puxando a corda para baixo e abra as mãos no final."),
-        Exercicio(8, "Puxada Frontal", "Máquina 8 — Pulldown", "Costas", "Setor de Costas",
-            "Segure a barra com pegada aberta e puxe até a altura do queixo, levando os cotovelos para baixo."),
-        Exercicio(9, "Remada Baixa", "Máquina 9 — Remada", "Costas", "Setor de Costas",
-            "Coluna neutra; puxe o triângulo em direção ao abdômen aproximando as escápulas."),
-        Exercicio(10, "Rosca Direta", "Área Livre — Halteres", "Braços", "Área Livre",
-            "Cotovelos fixos ao lado do corpo; flexione os braços sem balançar o tronco."),
-        Exercicio(11, "Esteira", "Cardio — Esteira 4", "Cardio", "Setor de Cardio",
-            "Alterne 1 minuto de corrida forte com 1 minuto de caminhada."),
-        Exercicio(12, "Bicicleta Ergométrica", "Cardio — Bike 2", "Cardio", "Setor de Cardio",
-            "Pedale em ritmo moderado mantendo a coluna ereta."),
-    )
+    // ---------- Catálogo ----------
+    val exercicios = mutableListOf<Exercicio>()
+    val treinos = mutableListOf<Treino>()
 
     fun exercicio(id: Int) = exercicios.first { it.id == id }
-
     fun proximoIdExercicio() = (exercicios.maxOfOrNull { it.id } ?: 0) + 1
-
-    // ---------- Modelos de treino ----------
-    val treinos = mutableListOf(
-        Treino(1, "Treino A — Peito e Tríceps", "Musculação", "Intermediário", 50, 8, mutableListOf(
-            ItemTreino(exercicio(5), 4, 10, 40),
-            ItemTreino(exercicio(6), 3, 12, 30),
-            ItemTreino(exercicio(7), 3, 12, 20),
-        )),
-        Treino(2, "Treino B — Costas e Bíceps", "Musculação", "Intermediário", 45, 8, mutableListOf(
-            ItemTreino(exercicio(8), 4, 10, 50),
-            ItemTreino(exercicio(9), 3, 12, 45),
-            ItemTreino(exercicio(10), 3, 12, 12),
-        )),
-        Treino(3, "Treino C — Pernas", "Musculação", "Intermediário", 55, 12, mutableListOf(
-            ItemTreino(exercicio(1), 4, 12, 80),
-            ItemTreino(exercicio(2), 3, 15, 40),
-            ItemTreino(exercicio(3), 3, 15, 35),
-            ItemTreino(exercicio(4), 4, 10, 60),
-        )),
-        Treino(4, "Cardio/HIIT", "Cardio", "Todos os níveis", 20, 24, mutableListOf(
-            ItemTreino(exercicio(11), 5, 1, 0, 30),
-            ItemTreino(exercicio(12), 3, 1, 0, 30),
-        )),
-    )
-
-    fun treino(id: Int) = treinos.firstOrNull { it.id == id }
-
+    fun treino(id: Int?) = treinos.firstOrNull { it.id == id }
     fun proximoIdTreino() = (treinos.maxOfOrNull { it.id } ?: 0) + 1
 
-    // ---------- Minha semana (quarta-feira é o "hoje" da demonstração, como no protótipo) ----------
-    const val INDICE_HOJE = 2
+    // ---------- Minha semana (RF10) ----------
+    private val nomesDias = listOf(
+        "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo",
+    )
+    private val letras = listOf("S", "T", "Q", "Q", "S", "S", "D")
+
+    /** Posição de hoje na semana (segunda = 0). */
+    val INDICE_HOJE: Int
+        get() = (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) + 5) % 7
+
+    /** Data (yyyy-MM-dd) do dia [indice] da semana atual. */
+    fun dataDoDia(indice: Int): String {
+        val c = Calendar.getInstance()
+        c.add(Calendar.DAY_OF_YEAR, indice - INDICE_HOJE)
+        return formatoData.format(c.time)
+    }
+
+    val treinoDeHojeConcluido get() = hoje() in aluno.concluidos
 
     val semana: List<DiaSemana>
-        get() = listOf(
-            DiaSemana("Segunda-feira", "S", treino(1), StatusDia.CONCLUIDO),
-            DiaSemana("Terça-feira", "T", treino(2), StatusDia.CONCLUIDO),
-            DiaSemana("Quarta-feira", "Q", treino(3),
-                if (treinoDeHojeConcluido) StatusDia.CONCLUIDO else StatusDia.HOJE),
-            DiaSemana("Quinta-feira", "Q", null, StatusDia.DESCANSO,
-                "Dia de recuperação", "Alongamento leve recomendado"),
-            DiaSemana("Sexta-feira", "S", treino(4), StatusDia.PLANEJADO),
-            DiaSemana("Sábado", "S", treino(1), StatusDia.PLANEJADO),
-            DiaSemana("Domingo", "D", null, null,
-                "Nenhum treino atribuído", "Seu professor ainda não montou este dia"),
-        )
+        get() = List(7) { i ->
+            val item = aluno.plano.getOrElse(i) { "" }
+            val treino = if (item.startsWith("t:")) treino(item.removePrefix("t:").toIntOrNull()) else null
+            when {
+                item == "descanso" -> DiaSemana(nomesDias[i], letras[i], null, StatusDia.DESCANSO,
+                    "Dia de recuperação", "Alongamento leve recomendado")
+                treino == null -> DiaSemana(nomesDias[i], letras[i], null, null,
+                    "Nenhum treino atribuído", "Seu professor ainda não montou este dia")
+                dataDoDia(i) in aluno.concluidos -> DiaSemana(nomesDias[i], letras[i], treino, StatusDia.CONCLUIDO)
+                i == INDICE_HOJE -> DiaSemana(nomesDias[i], letras[i], treino, StatusDia.HOJE)
+                else -> DiaSemana(nomesDias[i], letras[i], treino, StatusDia.PLANEJADO)
+            }
+        }
 
     val diaDeHoje get() = semana[INDICE_HOJE]
 
     // ---------- Evolução ----------
-    /** Carga por sessão (RF16). "Puxada" começa vazia para mostrar o estado "Sem dados ainda". */
-    val historicoCarga = linkedMapOf(
-        "Leg Press" to mutableListOf(40f, 45f, 50f, 55f, 60f, 70f, 80f),
-        "Supino" to mutableListOf(30f, 32f, 35f, 35f, 38f, 40f, 40f),
-        "Puxada" to mutableListOf<Float>(),
-    )
-
-    /** Carga registrada antes da atual, por exercício (RF13.2). */
-    val ultimaCargaRegistrada = mutableMapOf(1 to 75)
-
     fun chaveHistorico(exercicio: Exercicio) =
         historicoCarga.keys.firstOrNull { exercicio.nome.startsWith(it) }
 
-    /** Peso corporal dos últimos 3 meses (RF17). */
-    val historicoPeso = mutableListOf(76.2f, 75.6f, 75.0f, 74.1f, 73.4f, 72.6f, 72.0f)
-
-    val fotosProgresso = mutableListOf<FotoProgresso>()
-
     fun imc(peso: Double = pesoKg, alturaCm: Int = this.alturaCm): Double {
+        if (alturaCm <= 0) return 0.0
         val metros = alturaCm / 100.0
         return peso / (metros * metros)
     }
@@ -178,26 +145,18 @@ object Dados {
         else -> "Obesidade" to R.color.vermelho
     }
 
-    /** RF15.2 / RF19.2 — grava o treino concluído e soma os pontos do ranking. */
-    fun registrarTreinoConcluido(treino: Treino) {
-        treinosMes++
-        treinosTotais++
-        pontos += PONTOS_POR_TREINO
-        if (treino.id == diaDeHoje.treino?.id) treinoDeHojeConcluido = true
-        treino.itens.forEach { item ->
-            chaveHistorico(item.exercicio)?.let { chave -> historicoCarga[chave]?.add(item.carga.toFloat()) }
-        }
-        notificacoes.add(0, Notificacao("Treino concluído 💪",
-            "Você completou o ${treino.nome} e ganhou +$PONTOS_POR_TREINO pontos.", "agora", false))
-    }
+    // ---------- Ranking (RF19) ----------
+    val ranking = mutableListOf<PosicaoRanking>()
+
+    /** Ranking ordenado; só valem os pontos da semana atual. */
+    fun rankingOrdenado(): List<PosicaoRanking> = ranking.sortedWith(
+        compareByDescending<PosicaoRanking> { it.pontosSemana }.thenBy { it.nome },
+    )
+
+    val posicaoRanking get() = rankingOrdenado().indexOfFirst { it.ra == aluno.ra } + 1
 
     // ---------- Notificações (mais recentes primeiro — RF20.3) ----------
-    val notificacoes = mutableListOf(
-        Notificacao("Hora do treino!", "Seu Treino C — Pernas te espera hoje.", "há 2h", false),
-        Notificacao("Novo recorde 🎉", "Você bateu recorde no Leg Press: 80kg.", "há 1 dia", false),
-        Notificacao("Lembrete do professor", "Não esqueça de reavaliar sua anamnese.", "há 3 dias", true),
-        Notificacao("Você subiu no ranking", "Parabéns, você foi para #4 esta semana.", "há 5 dias", true),
-    )
+    val notificacoes = mutableListOf<Notificacao>()
 
     val perguntasParq = listOf(
         "Algum médico já disse que você possui um problema de coração?",
@@ -206,50 +165,44 @@ object Dados {
     )
 
     // ---------- Painel do Gestor ----------
-    var nomeGestor = "Prof. Carlos Andrade"
-    var emailGestor = EMAIL_GESTOR
+    var gestorUid = ""
+    var nomeGestor = ""
+    var emailGestor = ""
+    val alunos = mutableListOf<Aluno>()
+    val lembretes = mutableListOf<Lembrete>()
+    val avisosPainel = linkedMapOf<String, Boolean>()
 
-    val alunos = mutableListOf(
-        Aluno("Giuseppe Chinelate", "2201234567", "giuseppe@edu.unifor.br", "Ativo", "Musculação",
-            "Treino C — Pernas", "mar/2026", true),
-        Aluno("Marina Costa", "2201234568", "marina@edu.unifor.br", "Ativo", "Musculação",
-            "Treino A — Peito e Tríceps", "fev/2026", true),
-        Aluno("Lucas Pereira", "2201234569", "lucas@edu.unifor.br", "Ativo", "Funcional",
-            "Cardio/HIIT", "jan/2026", false),
-        Aluno("Beatriz Lima", "2201234570", "beatriz@edu.unifor.br", "Pendente", "Musculação",
-            "Treino B — Costas e Bíceps", "set/2026", true),
-        Aluno("Rafael Souza", "2201234571", "rafael@edu.unifor.br", "Ativo", "Cardio",
-            "Cardio/HIIT", "abr/2026", false),
-    )
+    /** Medidas atuais e a variação em relação à medição anterior (RF31.8.1). */
+    fun medidasDe(aluno: Aluno): List<Medida> {
+        val atual = aluno.medicoes.firstOrNull()
+        val anterior = aluno.medicoes.getOrNull(1)
+        fun linha(nome: String, unidade: String, v: (Medicao) -> String, menorMelhor: Boolean): Medida {
+            val agora = atual?.let(v).orEmpty()
+            val antes = anterior?.let(v)?.toDoubleOrNull()
+            val n = agora.toDoubleOrNull()
+            val dif = if (n != null && antes != null) n - antes else null
+            val texto = when {
+                dif == null -> "—"
+                dif > 0 -> "+" + formatarNumero(dif) + unidade
+                dif < 0 -> "-" + formatarNumero(-dif) + unidade
+                else -> "0$unidade"
+            }
+            val melhorou = dif == null || (if (menorMelhor) dif <= 0 else dif >= 0)
+            val valor = if (agora.isEmpty()) "—" else if (unidade == "%") "$agora%" else "$agora cm"
+            return Medida(nome, valor, texto, melhorou)
+        }
+        return listOf(
+            linha("Cintura", "cm", { it.cintura }, true),
+            linha("Quadril", "cm", { it.quadril }, true),
+            linha("Braço", "cm", { it.braco }, false),
+            linha("Coxa", "cm", { it.coxa }, false),
+            linha("% Gordura", "%", { it.gordura }, true),
+        )
+    }
 
-    val lembretes = mutableListOf(
-        Lembrete("Reavaliação de anamnese", "A cada 60 dias · Todos os alunos", true),
-        Lembrete("Treino não realizado", "Após 3 dias sem check-in", true),
-        Lembrete("Renovação de matrícula", "7 dias antes do vencimento", true),
-        Lembrete("Aniversário do aluno", "No dia do aniversário", false),
-    )
-
-    /** Avisos que o gestor escolheu receber (Perfil do Gestor → Notificações do painel). */
-    val avisosPainel = linkedMapOf(
-        "Anamnese pendente" to true,
-        "Novo aluno cadastrado" to true,
-        "Mensagem de aluno" to true,
-        "Treino não realizado" to false,
-    )
-
-    val medidasFicha = listOf(
-        Medida("Cintura", "82 cm", "-3cm", true),
-        Medida("Quadril", "98 cm", "-1cm", true),
-        Medida("Braço", "34 cm", "+1cm", true),
-        Medida("Coxa", "56 cm", "+2cm", true),
-        Medida("% Gordura", "18%", "-2%", true),
-    )
-
-    val historicoMedicoes = listOf(
-        "10/09/2026  ·  82 · 98 · 34 · 56 · 18%",
-        "10/06/2026  ·  85 · 99 · 33 · 54 · 20%",
-        "10/03/2026  ·  88 · 101 · 32 · 52 · 22%",
-    )
+    fun historicoMedicoesDe(aluno: Aluno) = aluno.medicoes.map {
+        "${it.data}  ·  ${it.cintura} · ${it.quadril} · ${it.braco} · ${it.coxa} · ${it.gordura.ifEmpty { "—" }}%"
+    }
 
     val opcoesStatus = listOf("Ativo", "Pendente", "Inativo")
     val opcoesTurma = listOf("Musculação", "Funcional", "Cardio")
@@ -259,4 +212,32 @@ object Dados {
     val opcoesSetor = listOf(
         "Setor de Pernas", "Setor de Costas", "Setor de Peito", "Setor de Polias", "Setor de Cardio", "Área Livre",
     )
+
+    // ---------- Datas ----------
+    val formatoData = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    fun hoje(): String = formatoData.format(Date())
+    fun mesAtual(): String = SimpleDateFormat("yyyy-MM", Locale.US).format(Date())
+    fun semanaAtual(): String = dataDoDia(0)
+    fun dataBr(): String = SimpleDateFormat("dd/MM/yyyy", Locale.US).format(Date())
+
+    private fun formatarNumero(v: Double) =
+        if (v % 1.0 == 0.0) v.toInt().toString() else String.format(Locale("pt", "BR"), "%.1f", v)
+
+    /** Limpa tudo ao sair da conta. */
+    fun limpar() {
+        papel = null
+        aluno = Aluno("", "", "", "", "", null, "", "")
+        professorDoAluno = ""
+        fotosProgresso.clear()
+        exercicios.clear()
+        treinos.clear()
+        ranking.clear()
+        notificacoes.clear()
+        gestorUid = ""
+        nomeGestor = ""
+        emailGestor = ""
+        alunos.clear()
+        lembretes.clear()
+        avisosPainel.clear()
+    }
 }
