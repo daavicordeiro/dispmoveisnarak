@@ -1,6 +1,8 @@
 package br.edu.unifor.uniforfit.gestor
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.text.InputFilter
 import android.text.InputType
 import android.widget.EditText
@@ -10,6 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.ui.auth.LoginActivity
 
@@ -17,6 +20,7 @@ import br.edu.unifor.uniforfit.ui.auth.LoginActivity
 class LoginGestorActivity : BaseActivity() {
 
     override val telaEscura = true
+    override val exigeSessao = false
 
     private lateinit var edtEmail: EditText
     private lateinit var edtSenha: EditText
@@ -47,23 +51,34 @@ class LoginGestorActivity : BaseActivity() {
         exigirConexao {
             // RF27.2 — credencial de aluno não entra no painel
             if (email.endsWith("@edu.unifor.br", ignoreCase = true)) {
-                Popup.mostrar(
-                    this,
-                    titulo = "Acesso restrito à equipe",
-                    mensagem = "O Painel do Gestor é exclusivo para os educadores físicos da academia. " +
-                        "Alunos entram pelo app com o R.A.",
-                    tipo = Popup.Tipo.PERIGO,
-                    botao = "Ir para o login do aluno",
-                    botaoSecundario = "Cancelar",
-                ) { irParaLoginDoAluno() }
+                avisarAcessoRestrito()
                 return@exigirConexao
             }
-            if (!Dados.loginGestorValido(email, senha)) {
-                mostrarErro("E-mail ou senha incorretos.")
-                return@exigirConexao
+            val botao = findViewById<TextView>(R.id.btnEntrar)
+            botao.isEnabled = false
+            lifecycleScope.launch {
+                val resultado = Banco.entrarGestor(email, senha)
+                botao.isEnabled = true
+                when (resultado) {
+                    Banco.Resultado.Ok -> pedirCodigo(email)
+                    Banco.Resultado.NaoEGestor -> avisarAcessoRestrito()
+                    is Banco.Resultado.Falha -> avisar("Não foi possível entrar agora. Tente novamente.")
+                    else -> mostrarErro("E-mail ou senha incorretos.")
+                }
             }
-            pedirCodigo(email)
         }
+    }
+
+    private fun avisarAcessoRestrito() {
+        Popup.mostrar(
+            this,
+            titulo = "Acesso restrito à equipe",
+            mensagem = "O Painel do Gestor é exclusivo para os educadores físicos da academia. " +
+                "Alunos entram pelo app com o R.A.",
+            tipo = Popup.Tipo.PERIGO,
+            botao = "Ir para o login do aluno",
+            botaoSecundario = "Cancelar",
+        ) { irParaLoginDoAluno() }
     }
 
     /** RNF05.3 — verificação em duas etapas para as contas de gestor. */
@@ -84,6 +99,8 @@ class LoginGestorActivity : BaseActivity() {
                 if (!valido) campos.campo1.error = "Digite os 6 dígitos"
                 valido
             },
+            // Cancelar a verificação desfaz o login já feito no Firebase.
+            aoSecundario = { Banco.sair() },
         ) { abrirComoInicio(HomeGestorActivity::class.java) }
     }
 

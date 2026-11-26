@@ -6,21 +6,27 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Transicao
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.gestor.LoginGestorActivity
 import br.edu.unifor.uniforfit.ui.home.HomeActivity
 import br.edu.unifor.uniforfit.ui.onboarding.AnamneseActivity
+import kotlinx.coroutines.launch
 
 /** Login (RF02) e Login — Erro de Credencial (RF02.3). */
 class LoginActivity : BaseActivity() {
+
+    override val exigeSessao = false
 
     private lateinit var etRa: EditText
     private lateinit var etSenha: EditText
     private lateinit var tvSubtitulo: TextView
     private lateinit var tvErro: TextView
+    private lateinit var btnEntrar: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +36,7 @@ class LoginActivity : BaseActivity() {
         etSenha = findViewById(R.id.etSenha)
         tvSubtitulo = findViewById(R.id.tvSubtitulo)
         tvErro = findViewById(R.id.tvErroLogin)
+        btnEntrar = findViewById(R.id.btnEntrar)
 
         etRa.doAfterTextChanged { esconderErro() }
         etSenha.doAfterTextChanged { esconderErro() }
@@ -38,7 +45,7 @@ class LoginActivity : BaseActivity() {
             acao == EditorInfo.IME_ACTION_DONE
         }
 
-        findViewById<TextView>(R.id.btnEntrar).setOnClickListener { entrar() }
+        btnEntrar.setOnClickListener { entrar() }
         findViewById<TextView>(R.id.tvEsqueciSenha).setOnClickListener {
             abrir(RecuperarSenhaActivity::class.java) // RF02.4
         }
@@ -58,16 +65,21 @@ class LoginActivity : BaseActivity() {
             return
         }
         exigirConexao {
-            if (!Dados.loginAlunoValido(ra, senha)) {
-                mostrarErro("R.A. ou senha incorretos. Tente novamente.")
-                return@exigirConexao
-            }
-            Dados.entrarComo(ra)
-            // Conta recém-criada que não terminou o cadastro clínico volta para a anamnese.
-            if (ra in Dados.onboardingPendente) {
-                abrirComoInicio(AnamneseActivity::class.java, Transicao.AVANCAR)
-            } else {
-                abrirComoInicio(HomeActivity::class.java)
+            btnEntrar.isEnabled = false
+            lifecycleScope.launch {
+                val resultado = Banco.entrarAluno(ra, senha)
+                btnEntrar.isEnabled = true
+                when (resultado) {
+                    Banco.Resultado.Ok ->
+                        // Conta recém-criada que não terminou o cadastro clínico volta para a anamnese.
+                        if (Dados.aluno.onboardingPendente) {
+                            abrirComoInicio(AnamneseActivity::class.java, Transicao.AVANCAR)
+                        } else {
+                            abrirComoInicio(HomeActivity::class.java)
+                        }
+                    is Banco.Resultado.Falha -> avisar("Não foi possível entrar agora. Tente novamente.")
+                    else -> mostrarErro("R.A. ou senha incorretos. Tente novamente.")
+                }
             }
         }
     }
@@ -76,7 +88,7 @@ class LoginActivity : BaseActivity() {
         tvErro.text = mensagem
         tvErro.isVisible = true
         tvSubtitulo.isVisible = false
-        findViewById<TextView>(R.id.btnEntrar).tremer()
+        btnEntrar.tremer()
     }
 
     private fun esconderErro() {

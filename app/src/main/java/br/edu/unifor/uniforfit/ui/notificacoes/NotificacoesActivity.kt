@@ -10,6 +10,7 @@ import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
 import br.edu.unifor.uniforfit.core.Transicao
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.Notificacao
 import br.edu.unifor.uniforfit.ui.evolucao.EvolucaoCargaActivity
@@ -35,6 +36,12 @@ class NotificacoesActivity : BaseActivity() {
         atualizarEstado()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun atualizarTela() {
+        adaptador.notifyDataSetChanged()
+        atualizarEstado()
+    }
+
     private fun atualizarEstado() {
         val vazia = Dados.notificacoes.isEmpty()
         findViewById<View>(R.id.tvVazio).isVisible = vazia
@@ -45,7 +52,7 @@ class NotificacoesActivity : BaseActivity() {
     /** Pop-up com o aviso completo; abrir marca como lida (RF20.2) e oferece o atalho da tela relacionada. */
     private fun abrirNotificacao(posicao: Int) {
         val notificacao = Dados.notificacoes.getOrNull(posicao) ?: return
-        notificacao.lida = true
+        Banco.marcarComoLida(notificacao)
         adaptador.notifyItemChanged(posicao)
 
         val atalho = atalhoPara(notificacao)
@@ -84,7 +91,7 @@ class NotificacoesActivity : BaseActivity() {
             botao = "Limpar tudo",
             botaoSecundario = "Cancelar",
         ) {
-            Dados.notificacoes.clear()
+            Banco.limparNotificacoes()
             adaptador.notifyDataSetChanged()
             atualizarEstado()
         }

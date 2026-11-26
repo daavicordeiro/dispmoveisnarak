@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.Popup
 import br.edu.unifor.uniforfit.data.Aluno
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -50,7 +51,7 @@ class EditarAlunoActivity : FormularioActivity() {
         }
         spStatus.preencher(Dados.opcoesStatus, atual?.status ?: "Pendente")
         spTurma.preencher(Dados.opcoesTurma, atual?.turma)
-        spTreino.preencher(Dados.treinos.map { it.nome }, atual?.treino)
+        spTreino.preencher(Dados.treinos.map { it.nome }, Dados.treino(atual?.treinoId)?.nome)
         marcarComoSalvo()
 
         findViewById<TextView>(R.id.btnSalvar).setOnClickListener { salvar() }
@@ -88,20 +89,33 @@ class EditarAlunoActivity : FormularioActivity() {
         }
 
         val atual = aluno
+        val treinoId = Dados.treinos.getOrNull(spTreino.selectedItemPosition)?.id
         if (atual == null) {
             val mes = SimpleDateFormat("MMM/yyyy", Locale.forLanguageTag("pt-BR")).format(Date()).replace(".", "")
-            Dados.alunos.add(Aluno(nome, ra, email, spStatus.valor, spTurma.valor, spTreino.valor, mes, true))
+            val novo = Aluno(nome, ra, email, spStatus.valor, spTurma.valor, treinoId, mes, Dados.gestorUid,
+                onboardingPendente = true, plano = planoPara(treinoId))
+            Dados.alunos.add(novo)
+            Banco.salvarAluno(novo, raAntigo = null)
         } else {
+            val raAntigo = atual.ra
+            if (atual.treinoId != treinoId) atual.plano = planoPara(treinoId)
             atual.nome = nome
             atual.ra = ra
             atual.email = email
             atual.status = spStatus.valor
             atual.turma = spTurma.valor
-            atual.treino = spTreino.valor
+            atual.treinoId = treinoId
+            Banco.salvarAluno(atual, raAntigo)
         }
         voltarPara(AlunosActivity::class.java) {
             putExtra(EXTRA_AVISO, if (atual == null) "Aluno cadastrado!" else "Dados de $nome salvos.")
         }
+    }
+
+    /** O treino atribuído vira o plano da semana: segunda, quarta e sexta, com descanso entre eles. */
+    private fun planoPara(treinoId: Int?): MutableList<String> {
+        val t = treinoId?.let { "t:$it" } ?: ""
+        return mutableListOf(t, "descanso", t, "descanso", t, "", "")
     }
 
     /** RF30.5 — exclusão sempre confirmada. */
@@ -116,7 +130,7 @@ class EditarAlunoActivity : FormularioActivity() {
             botao = "Excluir aluno",
             botaoSecundario = "Cancelar",
         ) {
-            Dados.alunos.remove(atual)
+            Banco.excluirAluno(atual)
             voltarPara(AlunosActivity::class.java) { putExtra(EXTRA_AVISO, "${atual.nome} foi excluído(a).") }
         }
     }

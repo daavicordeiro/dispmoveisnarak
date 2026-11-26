@@ -12,6 +12,7 @@ import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.esconderTeclado
 import br.edu.unifor.uniforfit.core.formatarDecimal
 import br.edu.unifor.uniforfit.core.formatarPeso
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 
 /** Calculadora de IMC (RF18). O botão de voltar (RF11.1) é ligado pela BaseActivity. */
@@ -65,9 +66,7 @@ class CalculadoraImcActivity : BaseActivity() {
 
         // RF18.1 — um novo peso/altura passa a valer na evolução corporal
         if (peso != Dados.pesoKg || altura != Dados.alturaCm) {
-            Dados.pesoKg = peso
-            Dados.alturaCm = altura
-            Dados.historicoPeso.add(peso.toFloat())
+            Banco.registrarPeso(peso, altura)
             avisar("Novo peso registrado na sua evolução corporal.")
         }
     }

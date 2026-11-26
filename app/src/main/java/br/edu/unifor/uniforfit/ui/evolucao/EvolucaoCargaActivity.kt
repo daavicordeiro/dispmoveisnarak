@@ -20,7 +20,7 @@ import kotlin.math.roundToInt
 /** Evolução de Carga (RF16) — aba "Evolução" da navbar. */
 class EvolucaoCargaActivity : BaseActivity() {
 
-    private var exercicio = Dados.historicoCarga.keys.first()
+    private var exercicio = Dados.historicoCarga.keys.firstOrNull().orEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

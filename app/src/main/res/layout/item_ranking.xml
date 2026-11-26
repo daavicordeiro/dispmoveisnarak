@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Linha do ranking (RF19.1). A do próprio aluno ganha fundo azul-claro e a pontuação. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/tvPosicao"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/texto_cinza"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/person_png"
+        android:backgroundTint="#000000"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/tvNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:textColor="@color/texto_escuro"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- RF19.2 — pontuação recalculada a cada treino concluído -->
+    <TextView
+        android:id="@+id/tvPontos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/azul"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+</LinearLayout>

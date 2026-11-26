@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.Treino
 import br.edu.unifor.uniforfit.ui.home.HomeActivity
@@ -230,7 +231,7 @@ class ExecucaoSerieActivity : BaseActivity() {
             botao = "Concluir",
             cancelavel = false,
         ) {
-            Dados.registrarTreinoConcluido(treino)
+            Banco.registrarTreinoConcluido(treino)
             voltarPara(HomeActivity::class.java)
         }
     }

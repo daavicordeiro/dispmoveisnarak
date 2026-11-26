@@ -222,6 +222,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tvVariacaoRanking"
                     android:text="Você subiu 2 posições"
                     android:textColor="@color/branco"
                     android:textSize="14sp"

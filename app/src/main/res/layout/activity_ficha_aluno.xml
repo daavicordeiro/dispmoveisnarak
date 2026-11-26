@@ -374,6 +374,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvResumoCargaPct"
                             android:text="+100%"
                             android:textColor="@color/azul"
                             android:textSize="18sp"
@@ -382,6 +383,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvResumoCargaRotulo"
                             android:text="Carga em 7 sem."
                             android:textColor="@color/texto_cinza"
                             android:textSize="10sp" />
@@ -396,6 +398,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvResumoPesoVar"
                             android:text="-4,2kg"
                             android:textColor="@color/azul"
                             android:textSize="18sp"
@@ -543,6 +546,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
+                    android:id="@+id/tvUltimaMedicao"
                     android:text="Última atualização: 10/09/2026"
                     android:textColor="@color/texto_cinza"
                     android:textSize="11sp" />
@@ -640,6 +644,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tvEvoCargaPct"
                         android:text="+100%"
                         android:textColor="@color/azul"
                         android:textSize="18sp"
@@ -648,6 +653,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tvEvoCargaRotulo"
                         android:text="Carga em 7 semanas"
                         android:textColor="@color/texto_cinza"
                         android:textSize="10sp" />
@@ -666,6 +672,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tvEvoPesoVar"
                         android:text="-4,2kg"
                         android:textColor="@color/azul"
                         android:textSize="18sp"

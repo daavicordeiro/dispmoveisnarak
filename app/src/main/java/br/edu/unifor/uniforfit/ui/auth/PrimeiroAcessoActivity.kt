@@ -2,22 +2,27 @@ package br.edu.unifor.uniforfit.ui.auth
 
 import android.os.Bundle
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
 import br.edu.unifor.uniforfit.core.Transicao
-import br.edu.unifor.uniforfit.data.Dados
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.ui.onboarding.AnamneseActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 /** Primeiro Acesso (RF03). */
 class PrimeiroAcessoActivity : BaseActivity() {
+
+    override val exigeSessao = false
 
     private lateinit var tilRa: TextInputLayout
     private lateinit var tilEmail: TextInputLayout
     private lateinit var tilSenha: TextInputLayout
     private lateinit var tilConfirmar: TextInputLayout
+    private lateinit var btnCriar: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +32,9 @@ class PrimeiroAcessoActivity : BaseActivity() {
         tilEmail = findViewById(R.id.tilEmail)
         tilSenha = findViewById(R.id.tilSenha)
         tilConfirmar = findViewById(R.id.tilConfirmarSenha)
+        btnCriar = findViewById(R.id.btnCriarConta)
 
-        findViewById<TextView>(R.id.btnCriarConta).setOnClickListener { criarConta() }
+        btnCriar.setOnClickListener { criarConta() }
         // RF03.8 — o login está logo abaixo na pilha
         findViewById<TextView>(R.id.tvFazerLogin).setOnClickListener { voltar() }
     }
@@ -48,32 +54,39 @@ class PrimeiroAcessoActivity : BaseActivity() {
         tilConfirmar.error = if (confirmacao == senha) null else "As senhas não conferem" // RF03.5
 
         if (listOf(tilRa, tilEmail, tilSenha, tilConfirmar).any { it.error != null }) {
-            findViewById<TextView>(R.id.btnCriarConta).tremer()
+            btnCriar.tremer()
             return
         }
 
         exigirConexao {
-            if (!Dados.raMatriculado(ra)) { // RF03.6
-                tilRa.error = "R.A. não encontrado entre os alunos matriculados"
-                return@exigirConexao
+            btnCriar.isEnabled = false
+            lifecycleScope.launch {
+                val info = runCatching { Banco.infoDoRa(ra) }
+                btnCriar.isEnabled = true
+                when {
+                    info.isFailure -> avisar("Não foi possível validar o R.A. agora. Tente novamente.")
+                    info.getOrNull() == null -> // RF03.6
+                        tilRa.error = "R.A. não encontrado entre os alunos matriculados"
+                    info.getOrNull()!!.temConta -> avisarJaTemConta()
+                    else -> confirmarTermos(ra, email, senha)
+                }
             }
-            if (ra in Dados.contas) {
-                Popup.mostrar(
-                    this,
-                    titulo = "Você já tem conta",
-                    mensagem = "Este R.A. já foi cadastrado. Entre com sua senha ou use \"Esqueci minha senha\".",
-                    tipo = Popup.Tipo.INFO,
-                    botao = "Ir para o login",
-                    botaoSecundario = "Cancelar",
-                ) { voltar() }
-                return@exigirConexao
-            }
-            confirmarTermos(ra, senha)
         }
     }
 
+    private fun avisarJaTemConta() {
+        Popup.mostrar(
+            this,
+            titulo = "Você já tem conta",
+            mensagem = "Este R.A. já foi cadastrado. Entre com sua senha ou use \"Esqueci minha senha\".",
+            tipo = Popup.Tipo.INFO,
+            botao = "Ir para o login",
+            botaoSecundario = "Cancelar",
+        ) { voltar() }
+    }
+
     /** RNF04.2 — políticas de privacidade e termos de uso apresentados no primeiro acesso. */
-    private fun confirmarTermos(ra: String, senha: String) {
+    private fun confirmarTermos(ra: String, email: String, senha: String) {
         Popup.mostrar(
             this,
             titulo = "Termos de uso e privacidade",
@@ -83,11 +96,18 @@ class PrimeiroAcessoActivity : BaseActivity() {
             botao = "Aceitar e criar conta",
             botaoSecundario = "Agora não",
         ) {
-            Dados.contas[ra] = senha
-            Dados.onboardingPendente += ra
-            Dados.entrarComo(ra)
-            // RF03.7 — conta criada segue direto para a anamnese
-            abrirComoInicio(AnamneseActivity::class.java, Transicao.AVANCAR)
+            btnCriar.isEnabled = false
+            lifecycleScope.launch {
+                val resultado = Banco.criarContaAluno(ra, email, senha)
+                btnCriar.isEnabled = true
+                when (resultado) {
+                    // RF03.7 — conta criada segue direto para a anamnese
+                    Banco.Resultado.Ok -> abrirComoInicio(AnamneseActivity::class.java, Transicao.AVANCAR)
+                    Banco.Resultado.JaTemConta -> avisarJaTemConta()
+                    Banco.Resultado.NaoEncontrado -> tilRa.error = "R.A. não encontrado entre os alunos matriculados"
+                    else -> avisar("Não foi possível criar a conta agora. Tente novamente.")
+                }
+            }
         }
     }
 }

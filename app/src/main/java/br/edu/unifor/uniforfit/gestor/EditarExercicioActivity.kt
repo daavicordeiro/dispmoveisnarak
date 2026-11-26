@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.Exercicio
 
@@ -112,13 +113,16 @@ class EditarExercicioActivity : FormularioActivity() {
         val maquina = etMaquina.text.toString().trim()
         val instrucoes = etInstrucoes.text.toString().trim()
         if (atual == null) {
-            Dados.exercicios.add(Exercicio(Dados.proximoIdExercicio(), nome, maquina, spGrupo.valor, spSetor.valor, instrucoes))
+            val novo = Exercicio(Dados.proximoIdExercicio(), nome, maquina, spGrupo.valor, spSetor.valor, instrucoes)
+            Dados.exercicios.add(novo)
+            Banco.salvarExercicio(novo)
         } else {
             atual.nome = nome
             atual.maquina = maquina
             atual.grupo = spGrupo.valor
             atual.setor = spSetor.valor
             atual.instrucoes = instrucoes // aparece para o aluno em "Como executar" (RF38.4)
+            Banco.salvarExercicio(atual)
         }
         voltarPara(ExerciciosActivity::class.java) {
             putExtra(EXTRA_AVISO, if (atual == null) "Exercício adicionado ao catálogo!" else "Exercício \"$nome\" salvo.")

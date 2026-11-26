@@ -8,9 +8,24 @@ Abrir a pasta `UniforFit` no Android Studio (AGP 9.3.3, Gradle 9.5, Kotlin, minS
 |---|---|---|
 | Aluno | R.A. `2201234567` | `12345678` |
 | Gestor | `professor@unifor.br` | `12345678` (código de verificação: qualquer 6 dígitos) |
-| Primeiro acesso | R.A. de aluno sem conta: `2201234568` a `2201234571`, e-mail `@edu.unifor.br` | mínimo 8 caracteres |
+| Primeiro acesso | R.A. de aluno matriculado sem conta (ex.: `2201234569` a `2201234572`), e-mail `@edu.unifor.br` | mínimo 8 caracteres |
 
-Os dados ficam em memória (`data/Dados.kt`) e voltam ao padrão quando o app é fechado.
+## Banco de dados (Firebase)
+
+Os dados ficam no Firebase do projeto `uniforfit-unifor` (Authentication + Firestore) e são carregados no login.
+Na primeira abertura o app cria a conta do gestor, os alunos matriculados, o catálogo de exercícios e treinos e
+os lembretes (`data/Semeador.kt`), só se `config/seed` ainda não existir.
+
+| Arquivo | Papel |
+|---|---|
+| `data/Banco.kt` | login, cadastro, leitura e gravação de tudo no Firestore |
+| `data/Dados.kt` | estado da sessão em memória usado pelas telas |
+| `data/Semeador.kt` | dados iniciais |
+| `ui/chatbot/Assistente.kt` | assistente com Gemini (Firebase AI Logic) |
+| `firestore.rules` | regras de segurança, publicadas no console do Firebase |
+
+O assistente usa o App Check: em cada aparelho de teste, cadastre no console (App Check → Gerenciar tokens de
+depuração) o token que aparece no Logcat em "Enter this debug secret into the allow list".
 
 ## Transições
 

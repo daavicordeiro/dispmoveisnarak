@@ -6,6 +6,7 @@ import android.widget.TextView
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -54,6 +55,7 @@ class ParqActivity : BaseActivity() {
         respostas.forEachIndexed { i, sim -> Dados.respostasParq[i] = sim }
         // RF06.2 — registra a data de preenchimento
         Dados.parqRespondidoEm = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        Banco.salvarSaude()
 
         if (respostas.any { it }) {
             // RF06.2 — classificado "com restrição": avisa antes de seguir

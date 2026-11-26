@@ -9,10 +9,14 @@ import androidx.core.widget.doAfterTextChanged
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
-import br.edu.unifor.uniforfit.data.Dados
+import br.edu.unifor.uniforfit.data.Banco
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 /** Recuperar Senha (RF04). O "← Voltar para o login" é ligado pela BaseActivity. */
 class RecuperarSenhaActivity : BaseActivity() {
+
+    override val exigeSessao = false
 
     private lateinit var etRa: EditText
     private lateinit var tvErro: TextView
@@ -38,19 +42,25 @@ class RecuperarSenhaActivity : BaseActivity() {
             return
         }
         exigirConexao {
-            // RF04.2 — só dispara o e-mail se o R.A. existir na base
-            val email = Dados.emailDoRa(ra)
-            if (email == null) {
-                mostrarErro("R.A. não encontrado. Confira os números e tente novamente.")
-                return@exigirConexao
+            val botao = findViewById<TextView>(R.id.btnEnviarLink)
+            botao.isEnabled = false
+            lifecycleScope.launch {
+                // RF04.2 — só dispara o e-mail se o R.A. existir na base
+                val (resultado, email) = Banco.recuperarSenha(ra)
+                botao.isEnabled = true
+                when {
+                    resultado == Banco.Resultado.Ok && email != null -> Popup.mostrar(
+                        this@RecuperarSenhaActivity,
+                        titulo = "Link enviado!",
+                        mensagem = "Enviamos um link de recuperação para ${mascarar(email)}. Confira sua caixa de entrada.",
+                        botao = "Voltar para o login",
+                        cancelavel = false,
+                    ) { voltar() }
+                    resultado == Banco.Resultado.NaoEncontrado ->
+                        mostrarErro("R.A. não encontrado. Confira os números e tente novamente.")
+                    else -> avisar("Não foi possível enviar o link agora. Tente novamente.")
+                }
             }
-            Popup.mostrar(
-                this,
-                titulo = "Link enviado!",
-                mensagem = "Enviamos um link de recuperação para ${mascarar(email)}. Confira sua caixa de entrada.",
-                botao = "Voltar para o login",
-                cancelavel = false,
-            ) { voltar() }
         }
     }
 

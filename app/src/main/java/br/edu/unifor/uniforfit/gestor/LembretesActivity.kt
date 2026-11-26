@@ -7,6 +7,7 @@ import android.widget.TextView
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.data.Lembrete
 import com.google.android.material.materialswitch.MaterialSwitch
@@ -34,6 +35,7 @@ class LembretesActivity : BaseActivity() {
                 contentDescription = lembrete.nome
                 setOnCheckedChangeListener { _, ativo ->
                     lembrete.ativo = ativo
+                    Banco.salvarLembrete(lembrete)
                     avisar(if (ativo) "\"${lembrete.nome}\" ativado." else "\"${lembrete.nome}\" desativado.")
                 }
             }
@@ -62,7 +64,9 @@ class LembretesActivity : BaseActivity() {
                 nomeOk && condicaoOk
             },
         ) {
-            Dados.lembretes.add(Lembrete(campos.campo1.text.toString().trim(), campos.campo2.text.toString().trim(), true))
+            val novo = Lembrete("", campos.campo1.text.toString().trim(), campos.campo2.text.toString().trim(), true)
+            Banco.salvarLembrete(novo)
+            Dados.lembretes.add(novo)
             montarLista()
             avisar("Lembrete criado e ativado.")
         }

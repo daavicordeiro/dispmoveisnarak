@@ -7,6 +7,7 @@ import android.widget.TextView
 import br.edu.unifor.uniforfit.R
 import br.edu.unifor.uniforfit.core.BaseActivity
 import br.edu.unifor.uniforfit.core.Popup
+import br.edu.unifor.uniforfit.data.Banco
 import br.edu.unifor.uniforfit.data.Dados
 import br.edu.unifor.uniforfit.ui.perfil.AcessibilidadeActivity
 
@@ -36,7 +37,10 @@ class PerfilGestorActivity : BaseActivity() {
                 tipo = Popup.Tipo.PERIGO,
                 botao = getString(R.string.uf_sair),
                 botaoSecundario = getString(R.string.uf_cancelar),
-            ) { abrirComoInicio(LoginGestorActivity::class.java) }
+            ) {
+                Banco.sair()
+                abrirComoInicio(LoginGestorActivity::class.java)
+            }
         }
     }
 
@@ -70,6 +74,7 @@ class PerfilGestorActivity : BaseActivity() {
         ) {
             Dados.nomeGestor = campos.campo1.text.toString().trim()
             Dados.emailGestor = campos.campo2.text.toString().trim()
+            Banco.salvarGestor()
             findViewById<TextView>(R.id.tvNomeGestor).text = Dados.nomeGestor
             avisar("Dados atualizados.")
         }
@@ -88,6 +93,7 @@ class PerfilGestorActivity : BaseActivity() {
             conteudo = marcacoes.view,
         ) {
             opcoes.forEachIndexed { i, aviso -> Dados.avisosPainel[aviso] = marcacoes.marcadas[i] }
+            Banco.salvarGestor()
             avisar("Preferências de notificação salvas.")
         }
     }
